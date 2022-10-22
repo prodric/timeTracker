@@ -1,0 +1,57 @@
+@startuml
+
+Node <--* Project : "*" nodes
+TimeInterval "*"<--*  Task : timeintervals
+TimeInterval ..|> Observer
+Observer <--o Observable : "*"observers
+Observable <|-- Clock
+Client  o-->"*" Node
+
+
+class Project extends Node{
+
+}
+
+abstract class Node {
+    -name : string
+    -startTime : LocalDateTime
+    -endTime : LocalDateTime
+    -workingTime : Duration
+    +calculateTotalTime()
+    +CreateNewTask()
+    +CreateNewSubProject()
+}
+
+class Task extends Node{
+    -taskType : int
+}
+
+class Client {
++ {static}main()
+}
+
+class TimeInterval {
+    -startTime : LocalDateTime
+    -endTime : LocalDateTime
+    +update()
+}
+
+interface Observer{
+    +update(arg0 : Observable,
+    arg1 : Object)
+}
+
+class Clock{
+    -timer : Duration
+    -dateTime : LocalDateTime
+    +startTimer()
+    -tick()
+}
+
+abstract class Observable{
++addObserver (ob: Observer)
++deleteObserver (ob: Observer)
++setChanged()
++notifyObservers(arg0: Observable, arg1: Object)
+}
+@enduml
