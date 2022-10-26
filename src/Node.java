@@ -3,10 +3,10 @@ import java.time.LocalDateTime;
 
 public abstract class Node {
     private String name;
-    private Node father;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private Duration workingTime;
+    protected Node father;
+    protected LocalDateTime startTime;
+    protected LocalDateTime endTime;
+    protected Duration workingTime;
 
     public Node(String name, Node father) {
         this.name = name;

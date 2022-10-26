@@ -5,15 +5,11 @@ public class Project extends Node {
 
     public Project(String name, Node father) {
         super(name, father);
+        nodes.add(this);
     }
 
     public ArrayList<Node> getNodes() {
         return nodes;
     }
-    public void addNode(Node child) {
-        nodes.add(child);
-    }
-    public void removeNode(Node child) {
-        nodes.remove(child);
-    }
+
 }
