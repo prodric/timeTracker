@@ -9,20 +9,23 @@ public class Task extends Node{
     public Task(String name, Node father) {
         super(name, father);
         this.timeIntervals = new ArrayList<TimeInterval>();
-        workingTime = Duration.ZERO;
+        setWorkingTime(Duration.ZERO);
     }
+
     public void startTask() {
-        startTime = LocalDateTime.now();
-        endTime = LocalDateTime.now();
+        setStartTime(LocalDateTime.now());
+        setEndTime(LocalDateTime.now());
 
         TimeInterval timeInterval = new TimeInterval(this);
-        timeInterval.setStartTime(startTime);
-        timeInterval.setEndTime(endTime);
+        timeInterval.setStartTime(getStartTime());
+        timeInterval.setEndTime(getEndTime());
         timeIntervals.add(timeInterval);
     }
 
 
-
-
-    public void calculateTotalTime(){}
+    public void calculateTotalTime(){
+        for (TimeInterval interval: timeIntervals) {
+            setWorkingTime(getWorkingTime().plus(interval.getTotalWorkingTime()));
+        }
+    }
 }

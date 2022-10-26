@@ -1,4 +1,3 @@
-import java.util.Observer;
 
 public class Client {
     public static void main(String[] args){
@@ -23,7 +22,6 @@ public class Client {
 //        t3.startTask();
 //        clock.stopTimer();
 
-        System.out.println(clock.countObservers());
 
     }
 }

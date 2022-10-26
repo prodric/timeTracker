@@ -3,10 +3,10 @@ import java.time.LocalDateTime;
 
 public abstract class Node {
     private String name;
-    protected Node father;
-    protected LocalDateTime startTime;
-    protected LocalDateTime endTime;
-    protected Duration workingTime;
+    private Node father;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private Duration totalWorkingTime;
 
     public Node(String name, Node father) {
         this.name = name;
@@ -22,7 +22,15 @@ public abstract class Node {
     }
 
     public Duration getWorkingTime() {
-        return workingTime;
+        return totalWorkingTime;
+    }
+
+    public LocalDateTime getStartTime(){
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime(){
+        return endTime;
     }
 
     public void setStartTime(LocalDateTime startTime) {
@@ -30,7 +38,7 @@ public abstract class Node {
     }
 
     public void setWorkingTime(Duration workingTime) {
-        this.workingTime = workingTime;
+        this.totalWorkingTime = workingTime;
     }
 
     public void setEndTime(LocalDateTime endTime) {
@@ -38,7 +46,5 @@ public abstract class Node {
     }
 
     public void calculateTotalTime(){}
-    public void createNewTask(){}
-    public void createNewSubProject(){}
 
 }
