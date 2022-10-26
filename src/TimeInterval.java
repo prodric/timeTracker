@@ -1,7 +1,9 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Observable;
+import java.util.Observer;
 
-public class TimeInterval {
+public class TimeInterval implements Observer {
     private Task task;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -26,5 +28,8 @@ public class TimeInterval {
         this.endTime = endTime;
     }
 
-    public void update(){}
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
