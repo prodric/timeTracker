@@ -1,21 +1,31 @@
 
 public class Client {
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
 
-        Clock clock = new Clock();
+        Clock clock = Clock.getInstance();
 
-        Project root = new Project("root", null);
-        Project p1 = new Project("P1", root);
-        Project p2 = new Project("P2", root);
-        Project p3 = new Project("P3", root);
+        Project p1 = new Project("Software Design", null);
+        Project p2 = new Project("Software Testing", null);
+        Project p3 = new Project("Databases", null);
 
-        Task t1 = new Task("T1", root);
-        Task t2 = new Task("T2", p1);
-        Task t3 = new Task("T3", p2);
+        Task t5 = new Task("Task Transportation", null);
 
-        clock.addObserver((Observer) t1);
-        clock.addObserver((Observer) t2);
-        clock.addObserver((Observer) t3);
+        Project p5 = new Project("Problems", p1);
+        Project p6 = new Project("Project Time Tracker", p1);
+
+        Task t1 = new Task("First List", p5);
+        Task t2 = new Task("Second List", p5);
+
+        Task t3= new Task("Read Handout", p6);
+        Task t4 = new Task("First Milestone", p6);
+
+        t1.startTask();
+        clock.addObserver(t1.getCurrentTimeInterval());
+        Thread.sleep(3000);
+
+        clock.stopClock();
+
+
 
 //        t1.startTask();
 //        t2.startTask();

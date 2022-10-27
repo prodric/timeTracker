@@ -1,11 +1,12 @@
-import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Task extends Node{
 
-    private ArrayList<TimeInterval> timeIntervals;
+    private List<TimeInterval> timeIntervals;
+    private TimeInterval current;
     public Task(String name, Node father) {
         super(name, father);
         this.timeIntervals = new ArrayList<TimeInterval>();
@@ -20,12 +21,16 @@ public class Task extends Node{
         timeInterval.setStartTime(getStartTime());
         timeInterval.setEndTime(getEndTime());
         timeIntervals.add(timeInterval);
+        current = timeInterval;
     }
 
-
+    public TimeInterval getCurrentTimeInterval (){
+        return current;
+    }
+    @Override
     public void calculateTotalTime(){
         for (TimeInterval interval: timeIntervals) {
-            setWorkingTime(getWorkingTime().plus(interval.getTotalWorkingTime()));
+            this.setWorkingTime(this.getWorkingTime().plus(interval.getTotalWorkingTime()));
         }
     }
 }

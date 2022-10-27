@@ -7,6 +7,7 @@ public class Clock extends Observable {
     private TimerTask timerTask;
     private Timer timer;
     private static Clock uniqueInstance = null;
+    private boolean stopClock = false;
 
     public Clock() {
         timer = new Timer();
@@ -14,6 +15,8 @@ public class Clock extends Observable {
             @Override
             public void run() {
                 tick();
+                if(stopClock)
+                    timer.cancel();
             }
         };
         timer.scheduleAtFixedRate(timerTask, 0, 1000);
@@ -22,6 +25,10 @@ public class Clock extends Observable {
     private void tick(){
         setChanged();
         notifyObservers(LocalDateTime.now());
+    }
+
+    public void stopClock(){
+        stopClock = true;
     }
 
     public static Clock getInstance() {
