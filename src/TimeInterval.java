@@ -11,6 +11,8 @@ public class TimeInterval implements Observer {
 
     public TimeInterval(Task task) {
         totalWorkingTime = Duration.ZERO;
+        startTime = LocalDateTime.now();
+        endTime = LocalDateTime.now();
         this.task = task;
     }
 
@@ -39,8 +41,12 @@ public class TimeInterval implements Observer {
     }
     @Override
     public void update(Observable o, Object arg) {
-        this.setEndTime((LocalDateTime) arg);
-        task.setEndTime((LocalDateTime) arg);
-        calculateTime();
+        Clock clock = Clock.getInstance();
+        long period = clock.getPeriod();
+        endTime.plusSeconds(period);
+        totalWorkingTime.plusSeconds(period);
+        //falta task.setEndtime
+        task.setWorkingTime(task.getWorkingTime().plusSeconds(period));
+
     }
 }

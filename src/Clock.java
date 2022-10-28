@@ -6,8 +6,11 @@ import java.util.TimerTask;
 public class Clock extends Observable {
     private TimerTask timerTask;
     private Timer timer;
+
+    private static final long period = 2;
     private static Clock uniqueInstance = null;
     private boolean stopClock = false;
+
 
     public Clock() {
         timer = new Timer();
@@ -19,14 +22,17 @@ public class Clock extends Observable {
                     timer.cancel();
             }
         };
-        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+        timer.scheduleAtFixedRate(timerTask, 0, period * 1000);
 
     }
     private void tick(){
         setChanged();
-        notifyObservers(LocalDateTime.now());
+        notifyObservers();
     }
 
+    public long getPeriod(){
+        return period;
+    }
     public void stopClock(){
         stopClock = true;
     }

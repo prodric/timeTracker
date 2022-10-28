@@ -20,7 +20,6 @@ public class Client {
         Task t4 = new Task("First Milestone", p6);
 
         t1.startTask();
-        clock.addObserver(t1.getCurrentTimeInterval());
         Thread.sleep(4000);
         clock.stopClock();
         System.out.println(t1.getCurrentTimeInterval().getTotalWorkingTime() + " Seconds");
@@ -32,6 +31,10 @@ public class Client {
 //        t3.startTask();
 //        clock.stopTimer();
 
+
+    }
+
+    public void testB (){
 
     }
 }
