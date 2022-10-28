@@ -21,9 +21,9 @@ public class Client {
 
         t1.startTask();
         clock.addObserver(t1.getCurrentTimeInterval());
-        Thread.sleep(3000);
-
+        Thread.sleep(4000);
         clock.stopClock();
+        System.out.println(t1.getCurrentTimeInterval().getTotalWorkingTime() + " Seconds");
 
 
 
