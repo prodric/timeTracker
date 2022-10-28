@@ -19,10 +19,12 @@ public class Client {
         Task t3= new Task("Read Handout", p6);
         Task t4 = new Task("First Milestone", p6);
 
+
+        TreePrinter printer = new TreePrinter(p1);
         t1.startTask();
         Thread.sleep(4000);
         clock.stopClock();
-        System.out.println(t1.getCurrentTimeInterval().getTotalWorkingTime() + " Seconds");
+
 
 
 

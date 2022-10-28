@@ -11,5 +11,11 @@ public class Project extends Node {
     public ArrayList<Node> getNodes() {
         return nodes;
     }
+    public void acceptVisitor(Visitor visit) {
+        visit.project(this);
+        for(Node n : nodes) {
+            n.acceptVisitor(visit);
+        }
+    }
 
 }

@@ -22,7 +22,9 @@ public class Task extends Node{
         timeIntervals.add(timeInterval);
         clock.addObserver(timeInterval);
     }
-
+    public void acceptVisitor(Visitor visit) {
+        visit.task(this);
+    }
     @Override
     public void calculateTotalTime(){
 

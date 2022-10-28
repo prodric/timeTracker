@@ -13,6 +13,8 @@ public abstract class Node {
         this.father = father;
     }
 
+    public abstract void acceptVisitor(Visitor visit);
+
     public Node getFather() {
         return father;
     }
@@ -44,7 +46,10 @@ public abstract class Node {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-
+    @Override
+    public String toString() {
+        return "   " + name + " " + startTime + "  " + endTime + "   " + totalWorkingTime;
+    }
     public void calculateTotalTime(){}
 
 }
