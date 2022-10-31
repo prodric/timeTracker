@@ -12,7 +12,7 @@ public class Clock extends Observable {
     private boolean stopClock = false;
 
 
-    public Clock() {
+    private Clock() {
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override

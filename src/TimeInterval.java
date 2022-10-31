@@ -36,17 +36,13 @@ public class TimeInterval implements Observer {
         this.endTime = endTime;
     }
 
-    public void calculateTime(){
-        totalWorkingTime = totalWorkingTime.between(startTime,endTime);
-    }
     @Override
     public void update(Observable o, Object arg) {
         Clock clock = Clock.getInstance();
         long period = clock.getPeriod();
         endTime.plusSeconds(period);
         totalWorkingTime.plusSeconds(period);
-        //falta task.setEndtime
-        task.setWorkingTime(task.getWorkingTime().plusSeconds(period));
 
+        task.updateTree(period, endTime);
     }
 }
