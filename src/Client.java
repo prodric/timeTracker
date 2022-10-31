@@ -23,6 +23,7 @@ public class Client {
         TreePrinter printer = new TreePrinter(p1);
         t1.startTask();
         Thread.sleep(4000);
+        t1.stopTask();
         clock.stopClock();
 
 
