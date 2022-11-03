@@ -1,5 +1,79 @@
 @startuml
 
+class Project extends Node{
+    -children : ArrayList<Node>
+    +acceptVisitor(visitor : Visitor)
+    +updateTree(period : Long, endTime : LocalDateTime)
+}
+
+abstract class Node {
+    -name : string
+    -startTime : LocalDateTime
+    -endTime : LocalDateTime
+    -totalWorkingTime : Duration
+    +{abstract} acceptVisitor(visitor : Visitor)
+    +{abstract} updateTree(period : Long, endTime : LocalDateTime)
+}
+
+class Task extends Node{
+    -timeIntervals : List<TimeInterval>
+    -lastAdded : TimeInterval
+    +startTask()
+    +stopTask()
+    +acceptVisitor(visit : Visitor)
+    +updateTree(period : Long, endTime : LocalDateTime)
+}
+
+class Client {
++ {static}main(args : String[])
+}
+
+class TimeInterval {
+    -task : Task
+    -startTime : LocalDateTime
+    -endTime : LocalDateTime
+    -totalWorkingTime : Duration
+    +update(o : Observable, arg : Object)
+    +acceptVisitor(visit : Visitor)
+}
+package java.util <<Folder>> {
+    interface Observer{
+        +update(arg0 : Observable,
+        arg1 : Object)
+    }
+    abstract class Observable{
+        +addObserver (ob: Observer)
+        +deleteObserver (ob: Observer)
+        +setChanged()
+        +notifyObservers(arg0: Observable, arg1: Object)
+    }
+}
+
+class Clock{
+    -timerTask : Duration
+    -timer : Timer
+    -{static}period : long
+    -{static}uniqueInstance : Clock
+    -stopClock : boolean
+    +stopClock()
+    -tick()
+    +getInstance() : Clock
+}
+
+interface Visitor {
+    +visitTask(t : Task)
+    +visitProject(p : Project)
+    +visitTimeInterval(interval : TimeInterval)
+}
+class TreePrinter implements Visitor{
+     -root : Project
+     -formatter : DateTimeFormatter
+     +visitTask(t : Task)
+     +visitProject(p : Project)
+     +visitTimeInterval(interval : TimeInterval)
+     +update(o : Observable, arg : Object)
+}
+Visitor -[hidden]right- Observable
 Node <--* Project : "*" nodes
 TimeInterval "*"<--*  Task : timeintervals
 TimeInterval ..|> Observer
@@ -7,51 +81,4 @@ Observer <--o Observable : "*"observers
 Observable <|-- Clock
 Client  o-->"*" Node
 
-
-class Project extends Node{
-
-}
-
-abstract class Node {
-    -name : string
-    -startTime : LocalDateTime
-    -endTime : LocalDateTime
-    -workingTime : Duration
-    +calculateTotalTime()
-    +CreateNewTask()
-    +CreateNewSubProject()
-}
-
-class Task extends Node{
-    -taskType : int
-}
-
-class Client {
-+ {static}main()
-}
-
-class TimeInterval {
-    -startTime : LocalDateTime
-    -endTime : LocalDateTime
-    +update()
-}
-
-interface Observer{
-    +update(arg0 : Observable,
-    arg1 : Object)
-}
-
-class Clock{
-    -timer : Duration
-    -dateTime : LocalDateTime
-    +startTimer()
-    -tick()
-}
-
-abstract class Observable{
-+addObserver (ob: Observer)
-+deleteObserver (ob: Observer)
-+setChanged()
-+notifyObservers(arg0: Observable, arg1: Object)
-}
 @enduml
