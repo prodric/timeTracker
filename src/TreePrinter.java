@@ -9,6 +9,9 @@ public class TreePrinter implements Visitor,Observer {
         this.root = (Project) root;
         Clock.getInstance().addObserver(this);
     }
+    /**
+     * Funcion que implementa el visitor para mostrar el/los proyecto/s
+     */
     public void visitProject(Project p) {
 
         System.out.printf("%-35s", "Project " + p.getName());
@@ -22,6 +25,9 @@ public class TreePrinter implements Visitor,Observer {
             }
     }
 
+    /**
+     * Funcion que implementa el visitor para mostrar la/s tarea/s
+     */
     @Override
     public void visitTask(Task t) {
         System.out.printf("%-35s", "Task " + t.getName());
@@ -35,6 +41,9 @@ public class TreePrinter implements Visitor,Observer {
         }
     }
 
+    /**
+     * Funcion que implementa el visitor para mostrar el time interval
+     */
     @Override
     public void visitTimeInterval(TimeInterval interval) {
         System.out.printf("%-35s", "Interval ");
@@ -44,6 +53,9 @@ public class TreePrinter implements Visitor,Observer {
         System.out.printf("%-35s %n", interval.getTotalWorkingTime().toSeconds());
     }
 
+    /**
+     * Funcion que actualiza el orbserver
+     */
     @Override
     public void update(Observable o, Object arg) {
         root.acceptVisitor(this);
