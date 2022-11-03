@@ -32,7 +32,7 @@ public abstract class Node {
         return name;
     }
 
-    public Duration getWorkingTime() {
+    public Duration getTotalWorkingTime() {
         return totalWorkingTime;
     }
 
