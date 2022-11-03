@@ -57,6 +57,7 @@ public class TimeInterval implements Observer {
 
     /**
      * Setter que modifica el tiempo final del intervalo
+
      */
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;

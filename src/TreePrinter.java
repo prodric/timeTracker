@@ -42,6 +42,7 @@ public class TreePrinter implements Visitor,Observer {
 
     /**
      * Funcion que implementa el visitor para mostrar el time interval
+
      */
     @Override
     public void visitTimeInterval(TimeInterval interval) {

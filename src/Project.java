@@ -19,6 +19,7 @@ public class Project extends Node {
 
     /**
      * Getter que recupera el hijo
+
      */
     public ArrayList<Node> getChildren() {
         return children;

@@ -52,6 +52,7 @@ public class Task extends Node{
 
     /**
      * Funcion que detiene la tarea
+
      */
     public void stopTask(){
             Clock.getInstance().deleteObserver(this.getLast());

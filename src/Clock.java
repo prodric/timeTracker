@@ -40,6 +40,7 @@ public class Clock extends Observable {
 
     /**
      * Getter para recuperar el valor del periodo
+
      */
     public long getPeriod(){
         return period;
