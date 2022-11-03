@@ -40,7 +40,7 @@ public class Task extends Node{
      */
     public void startTask() {
         if (getStartTime() == null && getEndTime() == null) {
-            setStartTime(LocalDateTime.now());
+            setStartTime(LocalDateTime.now().plusSeconds(Clock.getInstance().getPeriod()));
             setEndTime(LocalDateTime.now());
         }
 
