@@ -1,5 +1,4 @@
-import java.sql.Time;
-import java.time.Duration;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,8 @@ public class Task extends Node{
         this.timeIntervals = new ArrayList<TimeInterval>();
         if (father != null)
             father.getChildren().add(this);
+
+
     }
 
 
@@ -55,13 +56,13 @@ public class Task extends Node{
 
      */
     public void stopTask(){
-            Clock.getInstance().deleteObserver(this.getLast());
+        Clock.getInstance().deleteObserver(this.getLast());
     }
 
     /**
      * Funcion que implementa el visitor para recorrer la/s tarea/s
      */
-    public void acceptVisitor(Visitor visit) {
+    public void acceptVisitor(Visitor visit) throws IOException {
         visit.visitTask(this);
     }
 
@@ -71,7 +72,7 @@ public class Task extends Node{
     @Override
     public void updateTree(Long period, LocalDateTime endTime){
         this.setEndTime(endTime);
-        this.setWorkingTime(getWorkingTime().plusSeconds(period));
+        this.setWorkingTime(getTotalWorkingTime().plusSeconds(period));
         if(getFather() != null) {
             this.getFather().setStartTime(this.getStartTime());
             this.getFather().updateTree(period, endTime);

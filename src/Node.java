@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -16,7 +17,7 @@ public abstract class Node {
         endTime = null;
     }
 
-    public abstract void acceptVisitor(Visitor visit);
+    public abstract void acceptVisitor(Visitor visit) throws IOException;
     public abstract void updateTree(Long period, LocalDateTime endTime);
 
     protected Node getFather() {
@@ -32,7 +33,7 @@ public abstract class Node {
         return name;
     }
 
-    public Duration getWorkingTime() {
+    public Duration getTotalWorkingTime() {
         return totalWorkingTime;
     }
 

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class Project extends Node {
     /**
      * Funcion que implementa el visitor para recorrer el/los proyecto/S
      */
-    public void acceptVisitor(Visitor visit) {
+    public void acceptVisitor(Visitor visit) throws IOException {
         visit.visitProject(this);
     }
 
@@ -39,7 +40,7 @@ public class Project extends Node {
     @Override
     public void updateTree(Long period, LocalDateTime endTime){
         this.setEndTime(endTime);
-        this.setWorkingTime(getWorkingTime().plusSeconds(period));
+        this.setWorkingTime(getTotalWorkingTime().plusSeconds(period));
         if(getFather() != null) {
             this.getFather().setStartTime(this.getStartTime());
             this.getFather().updateTree(period, endTime);
