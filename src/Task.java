@@ -1,3 +1,4 @@
+import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,7 +7,7 @@ import java.util.List;
 public class Task extends Node{
 
     private List<TimeInterval> timeIntervals;
-    private final Clock clock = Clock.getInstance();
+    private TimeInterval lastAdded;
     public Task(String name, Project father) {
         super(name, father);
         this.timeIntervals = new ArrayList<TimeInterval>();
@@ -17,6 +18,9 @@ public class Task extends Node{
     public List<TimeInterval> getTimeIntervals (){
         return timeIntervals;
     }
+    public TimeInterval getLast(){
+        return lastAdded;
+    }
 
     public void startTask() {
         if (getStartTime() == null && getEndTime() == null) {
@@ -26,11 +30,12 @@ public class Task extends Node{
 
         TimeInterval timeInterval = new TimeInterval(this);
         timeIntervals.add(timeInterval);
-        clock.addObserver(timeInterval);
+        lastAdded = timeInterval;
+        Clock.getInstance().addObserver(timeInterval);
     }
 
     public void stopTask(){
-            clock.deleteObservers();
+            Clock.getInstance().deleteObserver(this.getLast());
     }
 
     public void acceptVisitor(Visitor visit) {

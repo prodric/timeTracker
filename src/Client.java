@@ -21,10 +21,14 @@ public class Client {
 
         TreePrinter printer = new TreePrinter(p1);
         t1.startTask();
+        Thread.sleep(2000);
+        t1.stopTask();
+        t2.startTask();
         Thread.sleep(4000);
+        t2.stopTask();
         clock.stopClock();
 
-        clock.deleteObservers();
+
 
 
     }
