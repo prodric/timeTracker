@@ -1,4 +1,5 @@
 public interface Visitor {
-    void project(Project p);
-    void task(Task t);
+    void visitProject(Project p);
+    void visitTask(Task t);
+    void visitTimeInterval(TimeInterval interval);
 }

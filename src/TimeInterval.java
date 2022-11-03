@@ -16,6 +16,9 @@ public class TimeInterval implements Observer {
         this.task = task;
     }
 
+    public String getTaskName(){
+        return task.getName();
+    }
     public LocalDateTime getStartTime() {
         return startTime;
     }
@@ -38,11 +41,18 @@ public class TimeInterval implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Clock clock = Clock.getInstance();
-        long period = clock.getPeriod();
-        endTime.plusSeconds(period);
-        totalWorkingTime.plusSeconds(period);
+        long period = Clock.getInstance().getPeriod();
+        endTime = endTime.plusSeconds(period);
+        totalWorkingTime = totalWorkingTime.plusSeconds(period);
+
+//        System.out.println("Interval " + startTime);
+//        System.out.println("Interval " + endTime);
+//        System.out.println("Interval " + totalWorkingTime.toSeconds());
 
         task.updateTree(period, endTime);
+    }
+
+    public void acceptVisitor(Visitor visit) {
+        visit.visitTimeInterval(this);
     }
 }

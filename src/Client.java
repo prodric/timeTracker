@@ -19,20 +19,12 @@ public class Client {
         Task t3= new Task("Read Handout", p6);
         Task t4 = new Task("First Milestone", p6);
 
-
         TreePrinter printer = new TreePrinter(p1);
         t1.startTask();
         Thread.sleep(4000);
-        t1.stopTask();
         clock.stopClock();
 
-
-
-
-//        t1.startTask();
-//        t2.startTask();
-//        t3.startTask();
-//        clock.stopTimer();
+        clock.deleteObservers();
 
 
     }

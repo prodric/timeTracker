@@ -8,7 +8,7 @@ public abstract class Node {
     private LocalDateTime endTime;
     private Duration totalWorkingTime;
 
-    public Node(String name, Node father) {
+    public Node(String name, Project father) {
         this.name = name;
         this.father = father;
         totalWorkingTime = Duration.ZERO;
@@ -17,9 +17,15 @@ public abstract class Node {
     }
 
     public abstract void acceptVisitor(Visitor visit);
+    public abstract void updateTree(Long period, LocalDateTime endTime);
 
-    private Node getFather() {
+    protected Node getFather() {
         return father;
+    }
+    public String getFatherName(){
+        if(father != null)
+            return father.getName();
+        return null;
     }
 
     public String getName() {
@@ -48,17 +54,6 @@ public abstract class Node {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
-    }
-
-    public void updateTree(Long period, LocalDateTime endTime){
-        this.setEndTime(endTime);
-        this.setWorkingTime(getWorkingTime().plusSeconds(period));
-        this.getFather().updateTree(period, endTime);
-    }
-
-    @Override
-    public String toString() {
-        return "   " + name + " " + startTime + "  " + endTime + "   " + totalWorkingTime;
     }
 
 }

@@ -1,21 +1,36 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Project extends Node {
-    private ArrayList<Node> nodes = new ArrayList<Node>();
+    private ArrayList<Node> children;
 
-    public Project(String name, Node father) {
+    public Project(String name, Project father) {
         super(name, father);
-        nodes.add(this);
+        children = new ArrayList<Node>();
+        if (father != null)
+            father.children.add(this);
     }
 
-    public ArrayList<Node> getNodes() {
-        return nodes;
+    public ArrayList<Node> getChildren() {
+        return children;
     }
+
     public void acceptVisitor(Visitor visit) {
-        visit.project(this);
-        for(Node n : nodes) {
-            n.acceptVisitor(visit);
+        visit.visitProject(this);
+    }
+
+    @Override
+    public void updateTree(Long period, LocalDateTime endTime){
+        this.setEndTime(endTime);
+        this.setWorkingTime(getWorkingTime().plusSeconds(period));
+        if(getFather() != null) {
+            this.getFather().setStartTime(this.getStartTime());
+            this.getFather().updateTree(period, endTime);
         }
+
+//        System.out.println("Project " + getStartTime());
+//        System.out.println("Project " + getEndTime());
+//        System.out.println("Project " + getWorkingTime().toSeconds());
     }
 
 }

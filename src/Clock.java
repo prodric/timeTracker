@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
