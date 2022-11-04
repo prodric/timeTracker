@@ -13,7 +13,9 @@ public class Task extends Node{
 
     /**
      * Constructor que crea una tarea
-     * @param "void"
+     * @param name : String     nombre de la tarea
+     * @param father : Project   padre de la tarea
+     * @return void
      */
     public Task(String name, Project father) {
         super(name, father);
@@ -22,6 +24,12 @@ public class Task extends Node{
             father.getChildren().add(this);
     }
 
+    /**
+     * Constructor que crea una tarea a partir de un JSONObject
+     * @param jsonObject : JSONObject     JSONObject del cual se extrae la informacion para reconstruir la tarea
+     * @param father : Project   padre de la tarea
+     * @return void
+     */
     public Task(JSONObject jsonObject, Project father) {
         super(jsonObject, father);
         lastAdded = (TimeInterval) jsonObject.get("lastAdded");
@@ -38,7 +46,9 @@ public class Task extends Node{
 
 
     /**
-     * Getter que recupera los intervalos de tiempo
+     * Getter que recupera los intervalos de tiempo que han sido guardados en la tarea
+     * @param "void"
+     * @return timeIntervals    Lista de intervalos
      */
     public List<TimeInterval> getTimeIntervals (){
         return timeIntervals;
@@ -46,13 +56,17 @@ public class Task extends Node{
 
     /**
      * Getter que recupera el ultimo time interval que se ha añadido a la tarea
+     * @return lastAdded   time interval mas reciente
      */
     public TimeInterval getLast(){
         return lastAdded;
     }
 
     /**
-     * Funcion que arranca la tarea
+     * Metodo que arranca la tarea, hace set del startTime y endTime a valores predeterminados.
+     * Instancia un intervalo nuevo y lo añade a la lista timeIntervals, además de guardarlo en lastAdded
+     * @param "void"
+     * @return "void"
      */
     public void startTask() {
         if (getStartTime() == null && getEndTime() == null) {
@@ -67,8 +81,9 @@ public class Task extends Node{
     }
 
     /**
-     * Funcion que detiene la tarea
-
+     * Metodo que detiene la tarea
+     * @param "void"
+     * @return "void"
      */
     public void stopTask(){
         Clock.getInstance().deleteObserver(this.getLast());
@@ -76,14 +91,19 @@ public class Task extends Node{
     }
 
     /**
-     * Funcion que implementa el visitor para recorrer la/s tarea/s
+     * Metodo que acepta el visitor para recorrer la/s tarea/s y realizar una operacion determinada por el visitor
+     * @param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar la llamada a visitTask()
+     * @return "void"
      */
     public void acceptVisitor(Visitor visit) throws IOException {
         visit.visitTask(this);
     }
 
     /**
-     * Funcion que actualiza el arbol modificando el tiempo final, el tiempo de trabajo
+     * Metodo que actualiza el arbol modificando el endTime, el totalWorkingTime
+     * @param period : Long     periodo de tiempo que tenemos que sumar a las variables LocalDateTime
+     * @param endTime : LocalDateTime  variable usada para actualizar endTime a los padres de la tarea
+     * @return "void"
      */
     @Override
     public void updateTree(Long period, LocalDateTime endTime){
@@ -99,6 +119,11 @@ public class Task extends Node{
 //        System.out.println("Task " + getWorkingTime().toSeconds());
     }
 
+    /**
+     * Metodo que convierte una tarea a un objeto JSON, también convierte a cada TimeInterval de la lista timeIntervals
+     * @param "void"
+     * @return JSONObject
+     */
     @Override
     public JSONObject toJson(){
         JSONObject jsonObject= new JSONObject();

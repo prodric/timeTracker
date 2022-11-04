@@ -10,13 +10,12 @@ public class Client {
     public static void main(String[] args) throws InterruptedException, IOException {
         //testA();
         //testB();
-        testPersistence();
-        //loadTest("src/resources/file.json");
+        //testPersistence();
+        //loadTest("file.json");
 
     }
-    public static void testA() throws InterruptedException {
-        Clock clock = Clock.getInstance();
-        Thread.sleep(1500);
+    public static void testA() {
+
         Project p1 = new Project("Software Design", null);
         Project p2 = new Project("Software Testing", null);
         Project p3 = new Project("Databases", null);
@@ -32,25 +31,12 @@ public class Client {
         Task t3 = new Task("Read Handout", p6);
         Task t4 = new Task("First Milestone", p6);
 
-        TreePrinter printer = new TreePrinter(p1);
-//        t1.startTask();
-//        Thread.sleep(2000);
-//        t1.stopTask();
-//        Thread.sleep(2000);
-//        t2.startTask();
-//        Thread.sleep(8000);
-//        t2.stopTask();
-//        clock.stopClock();
-        t1.startTask();
-        Thread.sleep(6000);
-        t1.stopTask();
-        clock.stopClock();
     }
 
     public static Project testB() throws InterruptedException {
 
         Clock clock = Clock.getInstance();
-        //Thread.sleep(1500);
+        Thread.sleep(1500);
 
         Project root = new Project ("root", null);
         Project p1 = new Project("Software Design", root);

@@ -9,15 +9,14 @@ import java.util.ArrayList;
 
 public class Project extends Node {
     private ArrayList<Node> children;
-
-    private FileWriter fileWriter;
-
-    private String path = "src/resources/file.json";
+    private String path = "file.json";
 
 
     /**
-     * Constructor que crea un proyecto
-     * @param "void"
+     * Constructor que crea un proyecto, añadiendolo como proyecto hijo en el caso de que no sea el root
+     * @param name : String     nombre del proyecto
+     * @param father : Project   padre del proyecto
+     * @return "void"
      */
     public Project(String name, Project father) {
         super(name, father);
@@ -26,6 +25,12 @@ public class Project extends Node {
             father.children.add(this);
     }
 
+    /**
+     * Constructor que crea un proyecto a partir de un JSONObject
+     * @param jsonObject : JSONObject     JSONObject del cual se extrae la informacion para reconstruir el proyecto
+     * @param father : Project   padre del proyecto
+     * @return "void"
+     */
     public Project(JSONObject jsonObject, Project father) {
         super(jsonObject, father);
 
@@ -45,15 +50,17 @@ public class Project extends Node {
         return path;
     }
     /**
-     * Getter que recupera el hijo
-
+     * Getter que devuelve la lista de los hijos del proyecto
+     * @return ArrayList<Node>  lista con los hijos
      */
     public ArrayList<Node> getChildren() {
         return children;
     }
 
     /**
-     * Funcion que implementa el visitor para recorrer el/los proyecto/S
+     * Metodo que acepta el visitor para recorrer el/los proyecto/s y realizar una operacion determinada por el visitor
+     * @param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar la llamada a visitProject()
+     * @return "void"
      */
     public void acceptVisitor(Visitor visit) throws IOException {
         visit.visitProject(this);
@@ -61,7 +68,10 @@ public class Project extends Node {
 
 
     /**
-     * Funcion que actualiza el arbol modificando el tiempo final, el tiempo de trabajo
+     * Metodo que actualiza el arbol modificando el endTime, el totalWorkingTime
+     * @param period : Long     periodo de tiempo que tenemos que sumar a las variables LocalDateTime
+     * @param endTime : LocalDateTime  variable usada para actualizar endTime a los padres de la tarea
+     * @return "void"
      */
     @Override
     public void updateTree(Long period, LocalDateTime endTime){
@@ -77,6 +87,11 @@ public class Project extends Node {
 //        System.out.println("Project " + getWorkingTime().toSeconds());
     }
 
+    /**
+     * Metodo que convierte un proyecto a un objeto JSON, también convierte a cada proyecto de la lista children
+     * @param "void"
+     * @return JSONObject
+     */
     @Override
     public JSONObject toJson(){
         JSONObject jsonObject= new JSONObject();
@@ -97,6 +112,12 @@ public class Project extends Node {
         return jsonObject;
     }
 
+    /**
+     * Metodo que guarda el jsonObject en el directorio especificado
+     * @param path : String     nombre del directorio
+     * @param jsonObject : JSONObject
+     * @return JSONObject
+     */
     public void save(String path, JSONObject jsonObject) {
 
         try {
