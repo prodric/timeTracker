@@ -1,6 +1,9 @@
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,11 +12,19 @@ public class TimeInterval implements Observer {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Duration totalWorkingTime;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public TimeInterval(Task task) {
         totalWorkingTime = Duration.ZERO;
         startTime = LocalDateTime.now().plusSeconds(Clock.getInstance().getPeriod());
         endTime = LocalDateTime.now();
+        this.task = task;
+    }
+
+    public TimeInterval(JSONObject jsonObject, Task task) {
+        totalWorkingTime = Duration.ofSeconds(jsonObject.getLong("totalWorkingTime"));;
+        startTime = LocalDateTime.parse( jsonObject.getString("startTime"), formatter);
+        endTime = LocalDateTime.parse( jsonObject.getString("endTime"), formatter);
         this.task = task;
     }
 
@@ -35,13 +46,6 @@ public class TimeInterval implements Observer {
         return totalWorkingTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -60,5 +64,14 @@ public class TimeInterval implements Observer {
         visit.visitTimeInterval(this);
     }
 
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
 
+        jsonObject.put("task", this.getTask());
+        jsonObject.put("startTime", this.getStartTime());
+        jsonObject.put("endTime", this.getEndTime());
+        jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
+
+        return jsonObject;
+    }
 }

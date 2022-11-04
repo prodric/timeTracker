@@ -1,13 +1,17 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
-import java.io.IOException;
+import java.io.*;
+
 
 public class Client {
 
     public static void main(String[] args) throws InterruptedException, IOException {
-
-        testB();
+        //testA();
+        //testB();
+        testPersistence();
+        //loadTest("src/resources/file.json");
 
     }
     public static void testA() throws InterruptedException {
@@ -43,7 +47,7 @@ public class Client {
         clock.stopClock();
     }
 
-    public static void testB() throws InterruptedException, IOException {
+    public static Project testB() throws InterruptedException {
 
         Clock clock = Clock.getInstance();
         //Thread.sleep(1500);
@@ -65,7 +69,7 @@ public class Client {
         Task t4 = new Task("First Milestone", p6);
 
         TreePrinter printer = new TreePrinter(root);
-        Persistence persistence= new Persistence(root);
+        //Persistence persistence= new Persistence(root);
 
         System.out.println("Start Test\n");
         System.out.println("\nTransportation Starts\n");
@@ -95,8 +99,35 @@ public class Client {
 
         clock.stopClock();
 
+        return root;
+    }
+
+    public static void testPersistence() throws InterruptedException {
+        Project root = testB();
+
+        root.save(root.getPath(), root.toJson());
+    }
+
+    public static void loadTest(String path) throws IOException {
+
+
+        InputStream is = Client.class.getResourceAsStream(path);
+        //InputStream is = new FileInputStream(path);
+        if (is == null) {
+            throw new NullPointerException("Cannot find resource file " + path);
+        }
+
+        JSONTokener tokener = new JSONTokener(is);
+        JSONObject object = new JSONObject(tokener);
+
+
+        JSONArray children = object.getJSONArray("Object");
+        for (int i = 0; i < children.length(); i++) {
+            System.out.println("  - " + children.get(i));
+        }
 
     }
+
 
 }
 

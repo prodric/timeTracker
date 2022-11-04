@@ -1,3 +1,6 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,7 +20,19 @@ public class Task extends Node{
         this.timeIntervals = new ArrayList<TimeInterval>();
         if (father != null)
             father.getChildren().add(this);
+    }
 
+    public Task(JSONObject jsonObject, Project father) {
+        super(jsonObject, father);
+        lastAdded = (TimeInterval) jsonObject.get("lastAdded");
+
+        for (int i = 0; i < jsonObject.getJSONArray("ObjectInterval").length(); i++){
+            JSONObject jsonObject2 = jsonObject.getJSONArray("ObjectInterval").getJSONObject(i);
+
+            if (jsonObject2.has("ObjectInterval")){
+                TimeInterval interval = new TimeInterval(jsonObject2, this);
+            }
+        }
 
     }
 
@@ -57,6 +72,7 @@ public class Task extends Node{
      */
     public void stopTask(){
         Clock.getInstance().deleteObserver(this.getLast());
+        //Clock.getInstance().deleteObserver(this.getTimeIntervals().get(this.getTimeIntervals().size() - 1));
     }
 
     /**
@@ -81,5 +97,26 @@ public class Task extends Node{
 //        System.out.println("Task " + getStartTime());
 //        System.out.println("Task " + getEndTime());
 //        System.out.println("Task " + getWorkingTime().toSeconds());
+    }
+
+    @Override
+    public JSONObject toJson(){
+        JSONObject jsonObject= new JSONObject();
+
+        jsonObject.put("name", this.getName());
+        jsonObject.put("father", this.getFatherName());
+        jsonObject.put("startTime", this.getStartTime());
+        jsonObject.put("endTime", this.getEndTime());
+        jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
+        jsonObject.put("lastAdded", this.getLast());
+
+        JSONArray jsonArray = new JSONArray();
+        for (TimeInterval interval: timeIntervals){
+            jsonArray.put(interval.toJson());
+        }
+
+        jsonObject.put("ObjectInterval", jsonArray);
+
+        return jsonObject;
     }
 }

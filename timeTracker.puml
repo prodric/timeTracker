@@ -4,6 +4,7 @@ class Project extends Node{
     -children : ArrayList<Node>
     +acceptVisitor(visitor : Visitor)
     +updateTree(period : Long, endTime : LocalDateTime)
+    +save(path : String, jsonObject : JSONObject)
 }
 
 abstract class Node {
@@ -13,6 +14,7 @@ abstract class Node {
     -totalWorkingTime : Duration
     +{abstract} acceptVisitor(visitor : Visitor)
     +{abstract} updateTree(period : Long, endTime : LocalDateTime)
+    #{abstract} toJson() : JSONObject
 }
 
 class Task extends Node{
@@ -22,6 +24,7 @@ class Task extends Node{
     +stopTask()
     +acceptVisitor(visit : Visitor)
     +updateTree(period : Long, endTime : LocalDateTime)
+
 }
 
 class Client {
@@ -35,6 +38,7 @@ class TimeInterval {
     -totalWorkingTime : Duration
     +update(o : Observable, arg : Object)
     +acceptVisitor(visit : Visitor)
+    +toJson() : JSONObject
 }
 package java.util <<Folder>> {
     interface Observer{
