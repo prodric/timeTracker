@@ -1,11 +1,9 @@
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 
 public class TreePrinter implements Visitor,Observer {
     private Project root;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public TreePrinter(Node root) {
         this.root = (Project) root;
         Clock.getInstance().addObserver(this);

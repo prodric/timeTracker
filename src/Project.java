@@ -34,6 +34,8 @@ public class Project extends Node {
     public Project(JSONObject jsonObject, Project father) {
         super(jsonObject, father);
 
+        children = new ArrayList<Node>();
+
         for (int i = 0; i < jsonObject.getJSONArray("Object").length(); i++){
             JSONObject jsonObject2 = jsonObject.getJSONArray("Object").getJSONObject(i);
 
@@ -96,11 +98,11 @@ public class Project extends Node {
     public JSONObject toJson(){
         JSONObject jsonObject= new JSONObject();
 
-        jsonObject.put("name", this.getName());
-        jsonObject.put("father", this.getFatherName());
-        jsonObject.put("startTime", this.getStartTime());
-        jsonObject.put("endTime", this.getEndTime());
-        jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
+            jsonObject.put("name", this.getName());
+            jsonObject.put("father", this.getFatherName());
+            jsonObject.put("startTime", this.getStartTime());
+            jsonObject.put("endTime", this.getEndTime());
+            jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
 
         JSONArray jsonArray = new JSONArray();
         for (Node child: children){

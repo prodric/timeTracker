@@ -34,8 +34,8 @@ public class TimeInterval implements Observer {
      */
     public TimeInterval(JSONObject jsonObject, Task task) {
         totalWorkingTime = Duration.ofSeconds(jsonObject.getLong("totalWorkingTime"));;
-        startTime = LocalDateTime.parse( jsonObject.getString("startTime"), formatter);
-        endTime = LocalDateTime.parse( jsonObject.getString("endTime"), formatter);
+        startTime = LocalDateTime.parse( jsonObject.getString("startTime"));
+        endTime = LocalDateTime.parse( jsonObject.getString("endTime"));
         this.task = task;
     }
 

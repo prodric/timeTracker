@@ -1,8 +1,7 @@
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
 import java.io.*;
+
 
 
 public class Client {
@@ -10,7 +9,7 @@ public class Client {
     public static void main(String[] args) throws InterruptedException, IOException {
         //testA();
         //testB();
-        //testPersistence();
+        testPersistence();
         //loadTest("file.json");
 
     }
@@ -94,26 +93,35 @@ public class Client {
         root.save(root.getPath(), root.toJson());
     }
 
-    public static void loadTest(String path) throws IOException {
+    public static void loadTest(String path) {
 
 
-        InputStream is = Client.class.getResourceAsStream(path);
-        //InputStream is = new FileInputStream(path);
-        if (is == null) {
-            throw new NullPointerException("Cannot find resource file " + path);
+//        InputStream is = Client.class.getResourceAsStream(path);
+//        //InputStream is = new FileInputStream(path);
+//        if (is == null) {
+//            throw new NullPointerException("Cannot find resource file " + path);
+//        }
+//
+//        //JSONTokener tokener = new JSONTokener(is);
+//        JSONObject object = new JSONObject(tokener);
+//
+//
+//        JSONArray children = object.getJSONArray("Object");
+//        for (int i = 0; i < children.length(); i++) {
+//            System.out.println("  - " + children.get(i));
+//        }
+
+        JSONTokener tokener = null;
+        try {
+            tokener = new JSONTokener(new FileReader(path));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        JSONObject jsonObject = new JSONObject(tokener);
 
-        JSONTokener tokener = new JSONTokener(is);
-        JSONObject object = new JSONObject(tokener);
-
-
-        JSONArray children = object.getJSONArray("Object");
-        for (int i = 0; i < children.length(); i++) {
-            System.out.println("  - " + children.get(i));
-        }
+        Project rootLoad = new Project(jsonObject, null);
 
     }
-
 
 }
 
