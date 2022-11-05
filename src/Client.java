@@ -8,7 +8,7 @@ public class Client {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         //testA();
-        testB();
+        //testB();
         //testPersistence();
         //loadTest("file.json");
 
@@ -122,7 +122,8 @@ public class Client {
         Project rootLoad = new Project(jsonObject, null);
 
     }
-/*
+
+    /*
     public static void getKey(JSONObject json, String key) {
         boolean exists = json.has(key);
         Iterator < ? > keys;
