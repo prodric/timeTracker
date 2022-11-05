@@ -2,6 +2,11 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * TreePrinter nos permite printar todo el arbol, gracias
+ * a visitar los nodos del proyecto principal cada vez que se actualiza
+ * el clock.
+ */
 public class TreePrinter implements Visitor,Observer {
     private Project root;
     public TreePrinter(Node root) {
