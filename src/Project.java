@@ -1,9 +1,9 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -36,15 +36,34 @@ public class Project extends Node {
 
         children = new ArrayList<Node>();
 
-        for (int i = 0; i < jsonObject.getJSONArray("Object").length(); i++){
-            JSONObject jsonObject2 = jsonObject.getJSONArray("Object").getJSONObject(i);
-
-            if (jsonObject2.has("Object")){
-                Project project = new Project(jsonObject2, this);
-                children.add(project);
-            }
+        if(jsonObject.get("startTime") == JSONObject.NULL){
+            setName(jsonObject.getString("projectName"));
+            setStartTime(null);
+            setEndTime(null);
+            setWorkingTime(Duration.ZERO);
+        }
+        else {
+            setName(jsonObject.getString("projectName"));
+            setStartTime(LocalDateTime.parse(jsonObject.getString("startTime")));
+            setEndTime(LocalDateTime.parse(jsonObject.getString("endTime")));
+            setWorkingTime(Duration.ofSeconds(jsonObject.getLong("totalWorkingTime")));
         }
 
+        if (jsonObject.has("Object")){
+            JSONArray jsonArray = jsonObject.getJSONArray("Object");
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jOb = jsonArray.getJSONObject(i);
+
+                if (jOb.has("projectName")){
+                    Project pr = new Project(jOb, this);
+                    children.add(pr);
+                } else if (jOb.has("taskName")) {
+                    Task t = new Task(jOb, this);
+                    children.add(t);
+                }
+            }
+        }
     }
 
 
@@ -64,7 +83,7 @@ public class Project extends Node {
      * @param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar la llamada a visitProject()
      * @return "void"
      */
-    public void acceptVisitor(Visitor visit) throws IOException {
+    public void acceptVisitor(Visitor visit) {
         visit.visitProject(this);
     }
 
@@ -98,18 +117,27 @@ public class Project extends Node {
     public JSONObject toJson(){
         JSONObject jsonObject= new JSONObject();
 
-            jsonObject.put("name", this.getName());
-            jsonObject.put("father", this.getFatherName());
+        if (this.getStartTime() == null){
+            jsonObject.put("projectName", this.getName());
+            jsonObject.put("father", this.getFather());
+            jsonObject.put("startTime", JSONObject.NULL);
+            jsonObject.put("endTime", JSONObject.NULL);
+            jsonObject.put("totalWorkingTime", JSONObject.NULL);
+        }
+        else {
+            jsonObject.put("projectName", this.getName());
+            jsonObject.put("father", this.getFather());
             jsonObject.put("startTime", this.getStartTime());
             jsonObject.put("endTime", this.getEndTime());
             jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
+        }
 
         JSONArray jsonArray = new JSONArray();
         for (Node child: children){
             jsonArray.put(((Node)child).toJson());
         }
-
-        jsonObject.put("Object", jsonArray);
+        String key = "Object";
+        jsonObject.put(key, jsonArray);
 
         return jsonObject;
     }

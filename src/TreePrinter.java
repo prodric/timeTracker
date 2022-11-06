@@ -18,7 +18,7 @@ public class TreePrinter implements Visitor,Observer {
      * @param p : Project    proyecto que queremos mostrar
      * @return "void"
      */
-    public void visitProject(Project p) throws IOException {
+    public void visitProject(Project p) {
         if (!(p.getStartTime() == null)){
             System.out.printf("%-35s", "Project " + p.getName());
             System.out.printf("%-35s", "child of " + p.getFatherName());
@@ -38,7 +38,7 @@ public class TreePrinter implements Visitor,Observer {
      * @return "void"
      */
     @Override
-    public void visitTask(Task t) throws IOException {
+    public void visitTask(Task t) {
         if (!(t.getStartTime() == null)) {
             System.out.printf("%-35s", "Task " + t.getName());
             System.out.printf("%-35s", "child of " + t.getFatherName());
@@ -72,11 +72,7 @@ public class TreePrinter implements Visitor,Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        try {
             root.acceptVisitor(this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
 

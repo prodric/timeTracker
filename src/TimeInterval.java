@@ -1,9 +1,6 @@
 import org.json.JSONObject;
-
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,7 +9,6 @@ public class TimeInterval implements Observer {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Duration totalWorkingTime;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * Constructor que crea un intervalo, setteando totalWorkingTime, startTime y endTime a valores por defecto
@@ -112,12 +108,13 @@ public class TimeInterval implements Observer {
      * @param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar la llamada a visitTimeInterval()
      * @return "void"
      */
-    public void acceptVisitor(Visitor visit) throws IOException {
+    public void acceptVisitor(Visitor visit) {
         visit.visitTimeInterval(this);
     }
 
     /**
      * Metodo que convierte un intervalo a un objeto JSON
+     *
      * @param "void"
      * @return JSONObject
      */

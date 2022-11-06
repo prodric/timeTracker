@@ -1,7 +1,6 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +38,30 @@ public class Task extends Node{
      */
     public Task(JSONObject jsonObject, Project father) {
         super(jsonObject, father);
-        lastAdded = (TimeInterval) jsonObject.get("lastAdded");
+        timeIntervals = new ArrayList<TimeInterval>();
 
-        for (int i = 0; i < jsonObject.getJSONArray("ObjectInterval").length(); i++){
-            JSONObject jsonObject2 = jsonObject.getJSONArray("ObjectInterval").getJSONObject(i);
+        if(jsonObject.get("startTime") == JSONObject.NULL){
+            setName(jsonObject.getString("taskName"));
+            setStartTime(null);
+            setEndTime(null);
+            setWorkingTime(Duration.ZERO);
+        }
+        else {
+            setName(jsonObject.getString("taskName"));
+            setStartTime(LocalDateTime.parse(jsonObject.getString("startTime")));
+            setEndTime(LocalDateTime.parse(jsonObject.getString("endTime")));
+            setWorkingTime(Duration.ofSeconds(jsonObject.getLong("totalWorkingTime")));
+        }
 
-            if (jsonObject2.has("ObjectInterval")){
-                TimeInterval interval = new TimeInterval(jsonObject2, this);
+        if (jsonObject.has("ObjectInterval")){
+            JSONArray jsonArray = jsonObject.getJSONArray("ObjectInterval");
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jOb = jsonArray.getJSONObject(i);
+
+                TimeInterval timeInterval = new TimeInterval(jOb, this);
+                timeIntervals.add(timeInterval);
+                lastAdded = timeInterval;
             }
         }
 
@@ -102,7 +118,7 @@ public class Task extends Node{
      * @param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar la llamada a visitTask()
      * @return "void"
      */
-    public void acceptVisitor(Visitor visit) throws IOException {
+    public void acceptVisitor(Visitor visit) {
         visit.visitTask(this);
     }
 
@@ -128,6 +144,7 @@ public class Task extends Node{
 
     /**
      * Metodo que convierte una tarea a un objeto JSON, también convierte a cada TimeInterval de la lista timeIntervals
+     *
      * @param "void"
      * @return JSONObject
      */
@@ -135,19 +152,29 @@ public class Task extends Node{
     public JSONObject toJson(){
         JSONObject jsonObject= new JSONObject();
 
-        jsonObject.put("name", this.getName());
-        jsonObject.put("father", this.getFatherName());
-        jsonObject.put("startTime", this.getStartTime());
-        jsonObject.put("endTime", this.getEndTime());
-        jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
-        jsonObject.put("lastAdded", this.getLast());
+        if (this.getStartTime() == null){
+            jsonObject.put("taskName", this.getName());
+            jsonObject.put("father", this.getFather());
+            jsonObject.put("startTime", JSONObject.NULL);
+            jsonObject.put("endTime", JSONObject.NULL);
+            jsonObject.put("totalWorkingTime", JSONObject.NULL);
+            jsonObject.put("lastAdded", this.getLast());
+        }
+        else {
+            jsonObject.put("taskName", this.getName());
+            jsonObject.put("father", this.getFather());
+            jsonObject.put("startTime", this.getStartTime());
+            jsonObject.put("endTime", this.getEndTime());
+            jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
+            jsonObject.put("lastAdded", this.getLast());
+        }
 
         JSONArray jsonArray = new JSONArray();
         for (TimeInterval interval: timeIntervals){
             jsonArray.put(interval.toJson());
         }
-
-        jsonObject.put("ObjectInterval", jsonArray);
+        String key = "ObjectInterval";
+        jsonObject.put(key, jsonArray);
 
         return jsonObject;
     }

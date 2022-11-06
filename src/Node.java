@@ -1,9 +1,8 @@
 import org.json.JSONObject;
-
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 
 public abstract class Node {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -21,21 +20,14 @@ public abstract class Node {
         endTime = null;
     }
 
+
     public Node(JSONObject jsonObject, Project father) {
-        name = jsonObject.getString("name");
         this.father = father;
-        startTime = LocalDateTime.parse(jsonObject.getString("startTime"));
-        endTime = LocalDateTime.parse(jsonObject.getString("endTime"));
-        totalWorkingTime = Duration.ofSeconds(jsonObject.getLong("totalWorkingTime"));
     }
 
-    public abstract void acceptVisitor(Visitor visit) throws IOException;
+    public abstract void acceptVisitor(Visitor visit);
     public abstract void updateTree(Long period, LocalDateTime endTime);
     protected abstract JSONObject toJson();
-
-    public DateTimeFormatter getFormatter() {
-        return formatter;
-    }
 
     protected Node getFather() {
         return father;
@@ -62,6 +54,10 @@ public abstract class Node {
         return endTime;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
@@ -73,5 +69,4 @@ public abstract class Node {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-
 }
