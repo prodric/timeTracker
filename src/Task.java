@@ -9,7 +9,7 @@ import java.util.List;
  *La funcion principal de la classe Task es la de iniciar o parar una tarea
  * guardando sus intervalos de tiempo gracias al patron de comportamiento Observer,
  * añadiendo o eliminando el intervalo de ser observado por clock.
- * A su vez tambien usamos el patron visitor para que TreePrinter visite cada tarea
+ * A su vez tambien utiliza el patron visitor para que TreePrinter visite cada tarea
  * y la pueda imprimir correctamente.
  */
 public class Task extends Node{
