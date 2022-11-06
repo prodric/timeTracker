@@ -7,6 +7,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * La clase Project implementa el patron estructural Composite, con
+ * el fin de que un proyecto pueda estar compuesto de otros
+ * nodos ya sean proyectos o tareas.
+ * Tambien implementa los metodos necesarios para convertir un proyecto
+ * en objecto json y guardarlo en un fichero.json
+ */
 public class Project extends Node {
     private ArrayList<Node> children;
     private String path = "file.json";
