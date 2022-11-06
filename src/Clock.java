@@ -2,6 +2,13 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * La classe Clock nos permite iniciar y parar el reloj,
+ * implementando el patron creacional Singleton,
+ * con el fin de que el reloj se instancie una unica vez y por
+ * otro lado proporcione un punto de acceso global para todo el
+ * proyecto.
+ */
 public class Clock extends Observable {
     private TimerTask timerTask;
     private Timer timer;
