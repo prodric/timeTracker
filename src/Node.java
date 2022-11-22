@@ -1,11 +1,10 @@
-import org.json.JSONObject;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+import org.json.JSONObject;
 
 public abstract class Node {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    //private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private String name;
     private Node father;
     private LocalDateTime startTime;
@@ -26,15 +25,17 @@ public abstract class Node {
     }
 
     public abstract void acceptVisitor(Visitor visit);
+
     public abstract void updateTree(Long period, LocalDateTime endTime);
+
     protected abstract JSONObject toJson();
 
-    protected Node getFather() {
-        return father;
-    }
+    protected Node getFather() {return father;}
+
     public String getFatherName(){
-        if(father != null)
+        if(father != null) {
             return father.getName();
+        }
         return null;
     }
 
