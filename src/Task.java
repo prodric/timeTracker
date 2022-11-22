@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -15,6 +17,7 @@ import org.json.JSONObject;
  */
 public class Task extends Node {
 
+  private static final Logger logger = LoggerFactory.getLogger("Task");
   private List<TimeInterval> timeIntervals;
   private TimeInterval lastAdded;
 
@@ -30,6 +33,8 @@ public class Task extends Node {
     if (father != null) {
       father.getChildren().add(this);
     }
+    invariant();
+    //logger.debug("Tarea creada exitosamente");
   }
 
   /**
@@ -66,9 +71,16 @@ public class Task extends Node {
         lastAdded = timeInterval;
       }
     }
-
+    invariant();
   }
 
+  private void invariant(){
+    assert getFather() != null;
+    assert getName() != "";
+    assert getName().charAt(0) != ' ';
+    assert getName().charAt(0) != '\t';
+
+  }
 
   /**
    * Getter que recupera los intervalos de tiempo que han sido guardados en la tarea.
@@ -76,6 +88,7 @@ public class Task extends Node {
    * return timeIntervals    Lista de intervalos.
    */
   public List<TimeInterval> getTimeIntervals() {
+    assert timeIntervals != null;
     return timeIntervals;
   }
 
@@ -95,6 +108,7 @@ public class Task extends Node {
    * return "void".
    */
   public void startTask() {
+
     if (getStartTime() == null && getEndTime() == null) {
       setStartTime(LocalDateTime.now().plusSeconds(Clock.getInstance().getPeriod()));
       setEndTime(LocalDateTime.now());
@@ -104,6 +118,13 @@ public class Task extends Node {
     timeIntervals.add(timeInterval);
     lastAdded = timeInterval;
     Clock.getInstance().addObserver(timeInterval);
+
+    //postcondiciones
+    assert !timeIntervals.isEmpty();
+    assert lastAdded != null;
+    assert getTotalWorkingTime() != null;
+    assert getStartTime() != null;
+    assert getEndTime() != null;
   }
 
   /**
@@ -112,9 +133,15 @@ public class Task extends Node {
    * return "void".
    */
   public void stopTask() {
+    int numObservers = Clock.getInstance().countObservers();
+    //precondiciones
+    assert getLast() != null;
+    assert Clock.getInstance() != null;
+
     Clock.getInstance().deleteObserver(this.getLast());
-    //Clock.getInstance().deleteObserver(this.getTimeIntervals()
-    // .get(this.getTimeIntervals().size() - 1));
+
+    //postcondiciones
+    assert Clock.getInstance().countObservers() == numObservers - 1;
   }
 
   /**
@@ -125,6 +152,7 @@ public class Task extends Node {
    * return "void".
    */
   public void acceptVisitor(Visitor visit) {
+    assert visit != null; //precondicion
     visit.visitTask(this);
   }
 
@@ -136,12 +164,20 @@ public class Task extends Node {
    */
   @Override
   public void updateTree(Long period, LocalDateTime endTime) {
+    //precondiciones
+    assert period == Clock.getInstance().getPeriod();
+    assert getStartTime() != null;
+    assert endTime != null;
+
     this.setEndTime(endTime);
     this.setWorkingTime(getTotalWorkingTime().plusSeconds(period));
     if (getFather() != null) {
       this.getFather().setStartTime(this.getStartTime());
       this.getFather().updateTree(period, endTime);
     }
+
+    //postcondiciones
+    assert getTotalWorkingTime() != null;
 
     //System.out.println("Task " + getStartTime());
     //System.out.println("Task " + getEndTime());

@@ -13,7 +13,7 @@ public class Client {
     //testB();
     //testPersistence();
     //loadTest("file.json");
-    testSearchByTag();
+    //testSearchByTag();
   }
 
   public static Project testA() {

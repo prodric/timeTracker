@@ -29,6 +29,7 @@ public class Project extends Node {
     if (father != null) {
       father.children.add(this);
     }
+    invariant();
   }
 
   /**
@@ -66,10 +67,18 @@ public class Project extends Node {
         }
       }
     }
+    invariant();
   }
 
+  private void invariant(){
+    assert getName() != "";
+    assert getName().charAt(0) != ' ';
+    assert getName().charAt(0) != '\t';
+  }
 
   public String getPath() {
+    assert path != null;
+    assert path != "";
     return path;
   }
 
@@ -77,6 +86,7 @@ public class Project extends Node {
    * Getter que devuelve la lista de los hijos del proyecto.
    */
   public ArrayList<Node> getChildren() {
+    assert children != null;
     return children;
   }
 
@@ -85,6 +95,7 @@ public class Project extends Node {
    * y realizar una operacion determinada por el visitor.
    */
   public void acceptVisitor(Visitor visit) {
+    assert visit != null;
     visit.visitProject(this);
   }
 
@@ -93,12 +104,20 @@ public class Project extends Node {
    */
   @Override
   public void updateTree(Long period, LocalDateTime endTime) {
+    //precondiciones
+    assert period == Clock.getInstance().getPeriod();
+    assert getStartTime() != null;
+    assert endTime != null;
+
     this.setEndTime(endTime);
     this.setWorkingTime(getTotalWorkingTime().plusSeconds(period));
     if (getFather() != null) {
       this.getFather().setStartTime(this.getStartTime());
       this.getFather().updateTree(period, endTime);
     }
+
+    //postcondiciones
+    assert getTotalWorkingTime() != null;
 
     //.out.println("Project " + getStartTime());
     //System.out.println("Project " + getEndTime());
