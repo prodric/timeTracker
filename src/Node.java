@@ -1,10 +1,14 @@
-import org.json.JSONObject;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.json.JSONObject;
 
-
+/**
+ * Representa cada nodo del arbol de tareas y proyectos.
+ * Siendo esta la clase abstracta de la cual heredan las clases
+ * Task y Project, a si misma usada por el patron estructural Composite
+ * en la clase Project.
+ */
 public abstract class Node {
   private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
   private String name;
@@ -37,8 +41,9 @@ public abstract class Node {
   }
 
   public String getFatherName() {
-    if (father != null)
+    if (father != null) {
       return father.getName();
+    }
     return null;
   }
 
