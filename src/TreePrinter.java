@@ -16,7 +16,7 @@ public class TreePrinter implements Visitor, Observer {
   }
 
   /**
-   * Metodo que implementa el visitor para mostrar el/los proyecto/s
+   * Metodo que implementa el visitor para mostrar el/los proyecto/s.
    *
    * @param p : Project    proyecto que queremos mostrar
    */
@@ -35,10 +35,10 @@ public class TreePrinter implements Visitor, Observer {
   }
 
   /**
-   * Metodo que implementa el visitor para mostrar la/s tarea/s
+   * Metodo que implementa el visitor para mostrar la/s tarea/s.
    *
    * @param t : Task    tarea que queremos mostrar
-   * @return "void"
+   *
    */
   @Override
   public void visitTask(Task t) {
@@ -56,10 +56,10 @@ public class TreePrinter implements Visitor, Observer {
   }
 
   /**
-   * Metodo que implementa el visitor para mostrar el/los intervalo/s
+   * Metodo que implementa el visitor para mostrar el/los intervalo/s.
    *
    * @param interval : TimeInterval    TimeInterval que queremos mostrar
-   * @return "void"
+   *
    */
   @Override
   public void visitTimeInterval(TimeInterval interval) {
@@ -71,8 +71,8 @@ public class TreePrinter implements Visitor, Observer {
   }
 
   /**
-   * Funcion que actualiza el visitor cada vez que recibe un aviso del observable
-   * Sirve para printar todo el arbol x periodo de tiempo
+   * Funcion que actualiza el visitor cada vez que recibe un aviso del observable.
+   * Sirve para printar todo el arbol x periodo de tiempo.
    */
   @Override
   public void update(Observable o, Object arg) {
