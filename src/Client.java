@@ -1,7 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -49,8 +48,8 @@ public class Client {
     Project p5 = new Project("Problems", p1);
     Project p6 = new Project("Project Time Tracker", p1);
 
-    Task t1 = new Task("First List", p5);
-    Task t2 = new Task("Second List", p5);
+    final Task t1 = new Task("First List", p5);
+    final Task t2 = new Task("Second List", p5);
 
     Task t3 = new Task("Read Handout", p6);
     Task t4 = new Task("First Milestone", p6);
