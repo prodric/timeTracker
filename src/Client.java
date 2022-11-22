@@ -8,7 +8,7 @@ import org.json.JSONTokener;
 public class Client {
   public static void main(String[] args) throws InterruptedException, IOException {
     //testA();
-    //testB();
+    testB();
     //testPersistence();
     //loadTest("file.json");
 
@@ -35,7 +35,7 @@ public class Client {
 
   public static Project testB() throws InterruptedException {
 
-    Clock clock = Clock.getInstance();
+
     Thread.sleep(1500);
 
     Project root = new Project("root", null);
@@ -55,7 +55,6 @@ public class Client {
     Task t4 = new Task("First Milestone", p6);
 
     TreePrinter printer = new TreePrinter(root);
-    //Persistence persistence= new Persistence(root);
 
     System.out.println("Start Test\n");
     System.out.println("\nTransportation Starts\n");
@@ -83,7 +82,7 @@ public class Client {
     t5.stopTask();
 
 
-    clock.stopClock();
+    Clock.getInstance().stopClock();
 
     return root;
   }
@@ -95,14 +94,14 @@ public class Client {
   }
 
   public static void loadTest(String path) {
-    JSONTokener tokener = null;
+    JSONTokener tokenizer = null;
     try {
-      tokener = new JSONTokener(new FileReader(path));
+      tokenizer = new JSONTokener(new FileReader(path));
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e);
     }
 
-    JSONObject jsonObject = new JSONObject(tokener);
+    JSONObject jsonObject = new JSONObject(tokenizer);
 
     Project loadRoot = new Project(jsonObject, null);
 
