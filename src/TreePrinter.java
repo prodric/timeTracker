@@ -19,7 +19,6 @@ public class TreePrinter implements Visitor, Observer {
    * Metodo que implementa el visitor para mostrar el/los proyecto/s
    *
    * @param p : Project    proyecto que queremos mostrar
-   * @return "void"
    */
   public void visitProject(Project p) {
     if (!(p.getStartTime() == null)) {

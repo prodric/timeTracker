@@ -30,8 +30,8 @@ public class Clock extends Observable {
       @Override
       public void run() {
         tick();
-        if (stopClock)   //si es true los Threads en lista de espera se cancelan, el actual termina su ejecucion
-          timer.cancel();
+        if (stopClock)   //si es true los Threads en lista de espera se cancelan,
+          timer.cancel();   // el actual termina su ejecucion
       }
     };
     timer.scheduleAtFixedRate(timerTask, 0, period * 1000);
