@@ -1,72 +1,76 @@
 import org.json.JSONObject;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
 public abstract class Node {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private String name;
-    private Node father;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private Duration totalWorkingTime;
+  private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  private String name;
+  private Node father;
+  private LocalDateTime startTime;
+  private LocalDateTime endTime;
+  private Duration totalWorkingTime;
 
-    public Node(String name, Project father) {
-        this.name = name;
-        this.father = father;
-        totalWorkingTime = Duration.ZERO;
-        startTime = null;
-        endTime = null;
-    }
+  public Node(String name, Project father) {
+    this.name = name;
+    this.father = father;
+    totalWorkingTime = Duration.ZERO;
+    startTime = null;
+    endTime = null;
+  }
 
 
-    public Node(JSONObject jsonObject, Project father) {
-        this.father = father;
-    }
+  public Node(JSONObject jsonObject, Project father) {
+    this.father = father;
+  }
 
-    public abstract void acceptVisitor(Visitor visit);
-    public abstract void updateTree(Long period, LocalDateTime endTime);
-    protected abstract JSONObject toJson();
+  public abstract void acceptVisitor(Visitor visit);
 
-    protected Node getFather() {
-        return father;
-    }
-    public String getFatherName(){
-        if(father != null)
-            return father.getName();
-        return null;
-    }
+  public abstract void updateTree(Long period, LocalDateTime endTime);
 
-    public String getName() {
-        return name;
-    }
+  protected abstract JSONObject toJson();
 
-    public Duration getTotalWorkingTime() {
-        return totalWorkingTime;
-    }
+  protected Node getFather() {
+    return father;
+  }
 
-    public LocalDateTime getStartTime(){
-        return startTime;
-    }
+  public String getFatherName() {
+    if (father != null)
+      return father.getName();
+    return null;
+  }
 
-    public LocalDateTime getEndTime(){
-        return endTime;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name){
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
+  public Duration getTotalWorkingTime() {
+    return totalWorkingTime;
+  }
 
-    public void setWorkingTime(Duration workingTime) {
-        this.totalWorkingTime = workingTime;
-    }
+  public LocalDateTime getStartTime() {
+    return startTime;
+  }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
+  public void setStartTime(LocalDateTime startTime) {
+    this.startTime = startTime;
+  }
+
+  public LocalDateTime getEndTime() {
+    return endTime;
+  }
+
+  public void setEndTime(LocalDateTime endTime) {
+    this.endTime = endTime;
+  }
+
+  public void setWorkingTime(Duration workingTime) {
+    this.totalWorkingTime = workingTime;
+  }
 }
