@@ -20,25 +20,19 @@ public class Project extends Node {
 
 
   /**
-   * Constructor que crea un proyecto, añadiendolo como proyecto hijo en el caso de que no sea el root
-   *
-   * @param name   : String     nombre del proyecto
-   * @param father : Project   padre del proyecto
-   * @return "void"
+   * Constructor que crea un proyecto, añadiendolo como proyecto hijo
+   * en el caso de que no sea el root.
    */
   public Project(String name, Project father) {
     super(name, father);
     children = new ArrayList<Node>();
-    if (father != null)
+    if (father != null) {
       father.children.add(this);
+    }
   }
 
   /**
-   * Constructor que crea un proyecto a partir de un JSONObject
-   *
-   * @param jsonObject : JSONObject     JSONObject del cual se extrae la informacion para reconstruir el proyecto
-   * @param father     : Project   padre del proyecto
-   * @return "void"
+   * Constructor que crea un proyecto a partir de un JSONObject.
    */
   public Project(JSONObject jsonObject, Project father) {
     super(jsonObject, father);
@@ -61,13 +55,13 @@ public class Project extends Node {
       JSONArray jsonArray = jsonObject.getJSONArray("Object");
 
       for (int i = 0; i < jsonArray.length(); i++) {
-        JSONObject jOb = jsonArray.getJSONObject(i);
+        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-        if (jOb.has("projectName")) {
-          Project pr = new Project(jOb, this);
+        if (jsonObject1.has("projectName")) {
+          Project pr = new Project(jsonObject1, this);
           children.add(pr);
-        } else if (jOb.has("taskName")) {
-          Task t = new Task(jOb, this);
+        } else if (jsonObject1.has("taskName")) {
+          Task t = new Task(jsonObject1, this);
           children.add(t);
         }
       }
@@ -80,19 +74,15 @@ public class Project extends Node {
   }
 
   /**
-   * Getter que devuelve la lista de los hijos del proyecto
-   *
-   * @return ArrayList<Node>  lista con los hijos
+   * Getter que devuelve la lista de los hijos del proyecto.
    */
   public ArrayList<Node> getChildren() {
     return children;
   }
 
   /**
-   * Metodo que acepta el visitor para recorrer el/los proyecto/s y realizar una operacion determinada por el visitor
-   *
-   * @param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar la llamada a visitProject()
-   * @return "void"
+   * Metodo que acepta el visitor para recorrer el/los proyecto/s
+   * y realizar una operacion determinada por el visitor.
    */
   public void acceptVisitor(Visitor visit) {
     visit.visitProject(this);
@@ -100,11 +90,7 @@ public class Project extends Node {
 
 
   /**
-   * Metodo que actualiza el arbol modificando el endTime, el totalWorkingTime
-   *
-   * @param period  : Long     periodo de tiempo que tenemos que sumar a las variables LocalDateTime
-   * @param endTime : LocalDateTime  variable usada para actualizar endTime a los padres de la tarea
-   * @return "void"
+   * Metodo que actualiza el arbol modificando el endTime, el totalWorkingTime.
    */
   @Override
   public void updateTree(Long period, LocalDateTime endTime) {
@@ -115,16 +101,14 @@ public class Project extends Node {
       this.getFather().updateTree(period, endTime);
     }
 
-//        System.out.println("Project " + getStartTime());
-//        System.out.println("Project " + getEndTime());
-//        System.out.println("Project " + getWorkingTime().toSeconds());
+    //.out.println("Project " + getStartTime());
+    //System.out.println("Project " + getEndTime());
+    //System.out.println("Project " + getWorkingTime().toSeconds());
   }
 
   /**
-   * Metodo que convierte un proyecto a un objeto JSON, también convierte a cada proyecto de la lista children
-   *
-   * @param "void"
-   * @return JSONObject
+   * Metodo que convierte un proyecto a un objeto JSON,
+   * también convierte a cada proyecto de la lista children.
    */
   @Override
   public JSONObject toJson() {
@@ -155,11 +139,7 @@ public class Project extends Node {
   }
 
   /**
-   * Metodo que guarda el jsonObject en el directorio especificado
-   *
-   * @param path       : String     nombre del directorio
-   * @param jsonObject : JSONObject
-   * @return JSONObject
+   * Metodo que guarda el jsonObject en el directorio especificado.
    */
   public void save(String path, JSONObject jsonObject) {
 

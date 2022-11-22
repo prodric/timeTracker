@@ -18,20 +18,17 @@ public class Clock extends Observable {
 
 
   /**
-   * Constructor que crea un thread que llama a la funcion tick() cada periodo de tiempo
-   *
-   * @param "void"
-   * @return "void"
+   * Constructor que crea un thread que llama a la funcion tick() cada periodo de tiempo.
    */
-
   private Clock() {
     timer = new Timer();
     timerTask = new TimerTask() {
       @Override
       public void run() {
         tick();
-        if (stopClock)   //si es true los Threads en lista de espera se cancelan,
+        if (stopClock) {   //si es true los Threads en lista de espera se cancelan,
           timer.cancel();   // el actual termina su ejecucion
+        }
       }
     };
     timer.scheduleAtFixedRate(timerTask, 0, period * 1000);
@@ -39,19 +36,17 @@ public class Clock extends Observable {
   }
 
   /**
-   * Implementacion del Singletone para obtener la unica instancia del reloj
+   * Implementacion del Singletone para obtener la unica instancia del reloj.
    */
   public static Clock getInstance() {
-    if (uniqueInstance == null)
+    if (uniqueInstance == null) {
       uniqueInstance = new Clock();
+    }
     return uniqueInstance;
   }
 
   /**
-   * Metodo que marca el estado del Observable a Changed para poder notificar a todos los observers
-   *
-   * @param "void"
-   * @return "void"
+   * Metodo que marca el estado del Observable a Changed para poder notificar a todos los observers.
    */
   private void tick() {
     setChanged();
@@ -59,20 +54,14 @@ public class Clock extends Observable {
   }
 
   /**
-   * Getter que devuelve el valor del periodo
-   *
-   * @param "void"
-   * @return long
+   * Getter que devuelve el valor del periodo.
    */
   public long getPeriod() {
     return period;
   }
 
   /**
-   * Metodo que detiene el reloj mediante un flag
-   *
-   * @param "void"
-   * @return long
+   * Metodo que detiene el reloj mediante un flag.
    */
   public void stopClock() {
     stopClock = true;
