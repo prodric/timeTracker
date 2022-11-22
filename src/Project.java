@@ -70,7 +70,7 @@ public class Project extends Node {
     invariant();
   }
 
-  private void invariant(){
+  private void invariant() {
     assert getName() != "";
     assert getName().charAt(0) != ' ';
     assert getName().charAt(0) != '\t';

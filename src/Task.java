@@ -74,7 +74,7 @@ public class Task extends Node {
     invariant();
   }
 
-  private void invariant(){
+  private void invariant() {
     assert getFather() != null;
     assert getName() != "";
     assert getName().charAt(0) != ' ';
@@ -133,7 +133,7 @@ public class Task extends Node {
    * return "void".
    */
   public void stopTask() {
-    int numObservers = Clock.getInstance().countObservers();
+    final int numObservers = Clock.getInstance().countObservers();
     //precondiciones
     assert getLast() != null;
     assert Clock.getInstance() != null;
