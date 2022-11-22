@@ -88,7 +88,6 @@ public class Project extends Node {
     visit.visitProject(this);
   }
 
-
   /**
    * Metodo que actualiza el arbol modificando el endTime, el totalWorkingTime.
    */

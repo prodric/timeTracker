@@ -1,6 +1,8 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -8,33 +10,54 @@ import org.json.JSONTokener;
 public class Client {
   public static void main(String[] args) throws InterruptedException, IOException {
     //testA();
-    testB();
+    //testB();
     //testPersistence();
     //loadTest("file.json");
-
+    testSearchByTag();
   }
 
-  public static void testA() {
+  public static Project testA() {
 
-    Project p1 = new Project("Software Design", null);
-    Project p2 = new Project("Software Testing", null);
-    Project p3 = new Project("Databases", null);
+    final ArrayList<String> softwareDesign = new ArrayList<>(
+        Arrays.asList("java", "flutter"));
+    final ArrayList<String> softwareTesting = new ArrayList<>(
+        Arrays.asList("c++", "Java", "python"));
+    final ArrayList<String> databases = new ArrayList<>(
+        Arrays.asList("SQL", "python", "C++"));
+    final ArrayList<String> firstList = new ArrayList<>(
+        Arrays.asList("java"));
+    final ArrayList<String> secondList = new ArrayList<>(
+        Arrays.asList("Dart"));
+    final ArrayList<String> firstMilestone = new ArrayList<>(
+        Arrays.asList("java", "IntelliJ"));
 
-    Task t5 = new Task("Task Transportation", null);
+    Project root = new Project("root", null);
+    Project p1 = new Project("Software Design", root);
+    Project p2 = new Project("Software Testing", root);
+    Project p3 = new Project("Databases", root);
+
+    Task t5 = new Task("Task Transportation", root);
 
     Project p5 = new Project("Problems", p1);
     Project p6 = new Project("Project Time Tracker", p1);
 
-    Task t1 = new Task("First List", p5);
-    Task t2 = new Task("Second List", p5);
+    final Task t1 = new Task("First List", p5);
+    final Task t2 = new Task("Second List", p5);
 
     Task t3 = new Task("Read Handout", p6);
-    Task t4 = new Task("First Milestone", p6);
+    final Task t4 = new Task("First Milestone", p6);
 
+    p1.setTag(softwareDesign);
+    p2.setTag(softwareTesting);
+    p3.setTag(databases);
+    t1.setTag(firstList);
+    t2.setTag(secondList);
+    t4.setTag(firstMilestone);
+
+    return root;
   }
 
   public static Project testB() throws InterruptedException {
-
 
     Thread.sleep(1500);
 
@@ -91,6 +114,22 @@ public class Client {
     Project root = testB();
 
     root.save(root.getPath(), root.toJson());
+  }
+
+  public static void testSearchByTag() throws InterruptedException {
+    Project root = testA();
+
+    String[] tags = {"Java", "JAVA", "flutteR", "c++", "pyThon", "SqL", "InTellij", "DaRT"};
+    ArrayList<SearchByTag> results = new ArrayList<SearchByTag>();
+
+    for (String tag : tags) {
+      SearchByTag searchByTag = new SearchByTag(root, tag);
+      results.add(searchByTag);
+    }
+
+    for (SearchByTag searchByTag : results) {
+      System.out.println(searchByTag);
+    }
   }
 
   public static void loadTest(String path) {

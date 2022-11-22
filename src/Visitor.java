@@ -1,8 +1,8 @@
 public interface Visitor {
-  /*
-   * Metodos que deberan implementar las classes que deriven de esta interface
-   *
-   * */
+
+  /**
+   * Metodos que deberan implementar las classes que deriven de esta interface.
+   */
   void visitProject(Project p);
 
   void visitTask(Task t);

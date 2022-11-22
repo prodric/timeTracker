@@ -1,6 +1,8 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONObject;
 
 /**
@@ -12,6 +14,7 @@ import org.json.JSONObject;
 public abstract class Node {
   private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
   private String name;
+  private List<String> tags;
   private Node father;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
@@ -20,9 +23,10 @@ public abstract class Node {
   public Node(String name, Project father) {
     this.name = name;
     this.father = father;
-    totalWorkingTime = Duration.ZERO;
-    startTime = null;
-    endTime = null;
+    this.tags = new ArrayList<String>();
+    this.totalWorkingTime = Duration.ZERO;
+    this.startTime = null;
+    this.endTime = null;
   }
 
 
@@ -53,6 +57,14 @@ public abstract class Node {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public List<String> getTag() {
+    return tags;
+  }
+
+  public void setTag(ArrayList<String> list) {
+    this.tags.addAll(list);
   }
 
   public Duration getTotalWorkingTime() {
