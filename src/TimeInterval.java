@@ -2,7 +2,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
-
 import org.json.JSONObject;
 
 /**
