@@ -1,8 +1,9 @@
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * La classe Clock nos permite iniciar y parar el reloj,

@@ -36,8 +36,8 @@ public class TimeInterval implements Observer {
     startTime = LocalDateTime.parse(jsonObject.getString("startTime"));
     endTime = LocalDateTime.parse(jsonObject.getString("endTime"));
     this.task = task;
-    logger.info("Time Interval for Task: {} " +
-        "has been loaded from JSON format successfully", this.task.getName());
+    logger.info("Time Interval for Task: {} "
+        + "has been loaded from JSON format successfully", this.task.getName());
   }
 
   /**
