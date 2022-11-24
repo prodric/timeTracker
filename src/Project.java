@@ -84,6 +84,9 @@ public class Project extends Node {
     assert getName().charAt(0) != '\t';
   }
 
+  /**
+   * Getter para obtener el recorrido del arbol.
+   */
   public String getPath() {
     assert path != null;
     assert !path.equals("");

@@ -13,6 +13,9 @@ public class TreePrinter implements Visitor, Observer {
   private Project root;
   private static final Logger logger = LoggerFactory.getLogger("Fita1");
 
+  /**
+   * Constructor por defecto de la funcion que imprime el arbol.
+   */
   public TreePrinter(Node root) {
     this.root = (Project) root;
     Clock.getInstance().addObserver(this);

@@ -8,11 +8,16 @@ import org.json.JSONTokener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * Classe principal que contiene el main del proyecto y los diferentes tests.
+ */
 public class Client {
 
   private static final Logger logger = LoggerFactory.getLogger("Client");
 
+  /**
+   * Main del programa principal que incluye los diferentes tests.
+   */
   public static void main(String[] args) throws InterruptedException, IOException {
     testA();
     //testB();
@@ -21,6 +26,9 @@ public class Client {
     //testSearchByTag();
   }
 
+  /**
+   * Test A que comprueba las requisitos de la fita 1.
+   */
   public static Project testA() {
     logger.info("Starting Test A");
 
@@ -65,6 +73,9 @@ public class Client {
     return root;
   }
 
+  /**
+   * Test B que comprueba las requisitos de la fita 1.
+   */
   public static Project testB() throws InterruptedException {
     logger.info("Starting Test B");
 
@@ -110,6 +121,9 @@ public class Client {
     return root;
   }
 
+  /**
+   * Test que comprueba las requisitos de la fita 1.
+   */
   public static void testPersistence() throws InterruptedException {
     logger.info("Starting Persistence Test");
     Project root = testB();
@@ -119,6 +133,9 @@ public class Client {
     logger.info("Persistence Test Finished");
   }
 
+  /**
+   * Test que comprueba las requisitos de la fita 2.
+   */
   public static void testSearchByTag() {
     logger.info("Starting Search By Tag Test");
     Project root = testA();
@@ -139,6 +156,9 @@ public class Client {
     logger.info("Search By Tag Test Finished");
   }
 
+  /**
+   * Funcion para cargar los diferentes tests.
+   */
   public static void loadTest(String path) {
     logger.info("Starting Load Test");
     JSONTokener tokenizer = null;

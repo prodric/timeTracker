@@ -20,6 +20,9 @@ public abstract class Node {
   private LocalDateTime endTime;
   private Duration totalWorkingTime;
 
+  /**
+   * Constructor por defecto de un nodo.
+   */
   public Node(String name, Project father) {
     this.name = name;
     this.father = father;
@@ -40,10 +43,16 @@ public abstract class Node {
 
   protected abstract JSONObject toJson();
 
+  /**
+   * Getter para obtener el padre de un proyecto/tarea.
+   */
   protected Node getFather() {
     return father;
   }
 
+  /**
+   * Getter para obtener el nombre del padre de un proyecto/tarea.
+   */
   public String getFatherName() {
     if (father != null) {
       return father.getName();
@@ -51,6 +60,9 @@ public abstract class Node {
     return null;
   }
 
+  /**
+   * Getter para obtener el nombre de un proyecto/tarea.
+   */
   public String getName() {
     return name;
   }
