@@ -134,6 +134,7 @@ public class Client {
     for (SearchByTag searchByTag : results) {
       System.out.println(searchByTag);
     }
+    System.out.println();
 
     logger.info("Search By Tag Test Finished");
   }
