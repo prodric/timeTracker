@@ -14,9 +14,9 @@ public class Client {
   private static final Logger logger = LoggerFactory.getLogger("Client");
 
   public static void main(String[] args) throws InterruptedException, IOException {
-    //testA();
+    testA();
     //testB();
-    testPersistence();
+    //testPersistence();
     //loadTest("file.json");
     //testSearchByTag();
   }
