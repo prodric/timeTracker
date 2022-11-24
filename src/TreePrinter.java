@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TreePrinter implements Visitor, Observer {
   private Project root;
-  private static final Logger logger = LoggerFactory.getLogger("TreePrinter");
+  private static final Logger logger = LoggerFactory.getLogger("Fita1");
 
   public TreePrinter(Node root) {
     this.root = (Project) root;

@@ -14,7 +14,7 @@ public class TimeInterval implements Observer {
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private Duration totalWorkingTime;
-  private static final Logger logger = LoggerFactory.getLogger("TimeInterval");
+  private static final Logger logger = LoggerFactory.getLogger("Fita1");
 
   /**
    * Constructor que crea un intervalo, setteando totalWorkingTime,

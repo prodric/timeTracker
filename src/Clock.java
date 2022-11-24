@@ -18,7 +18,7 @@ public class Clock extends Observable {
   private TimerTask timerTask;
   private Timer timer;
   private boolean stopClock = false;
-  private static final Logger logger = LoggerFactory.getLogger("Clock");
+  private static final Logger logger = LoggerFactory.getLogger("Fita1");
 
 
   /**

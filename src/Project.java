@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class Project extends Node {
   private ArrayList<Node> children;
   private String path = "file.json";
-  private static final Logger logger = LoggerFactory.getLogger("Project");
+  private static final Logger logger = LoggerFactory.getLogger("Fita1");
 
 
   /**

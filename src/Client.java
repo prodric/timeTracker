@@ -16,9 +16,9 @@ public class Client {
   public static void main(String[] args) throws InterruptedException, IOException {
     //testA();
     //testB();
-    //testPersistence();
+    testPersistence();
     //loadTest("file.json");
-    testSearchByTag();
+    //testSearchByTag();
   }
 
   public static Project testA() {
