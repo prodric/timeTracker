@@ -1,3 +1,6 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -8,16 +11,17 @@ import java.util.Observer;
  */
 public class TreePrinter implements Visitor, Observer {
   private Project root;
+  private static final Logger logger = LoggerFactory.getLogger("TreePrinter");
 
   public TreePrinter(Node root) {
     this.root = (Project) root;
     Clock.getInstance().addObserver(this);
+    logger.info("Printing Tree from Root: {}", this.root);
   }
 
   /**
    * Metodo que implementa el visitor para mostrar el/los proyecto/s.
-   *
-   * @param p : Project    proyecto que queremos mostrar
+   * param p : Project    proyecto que queremos mostrar
    */
   public void visitProject(Project p) {
     if (!(p.getStartTime() == null)) {
@@ -35,9 +39,7 @@ public class TreePrinter implements Visitor, Observer {
 
   /**
    * Metodo que implementa el visitor para mostrar la/s tarea/s.
-   *
-   * @param t : Task    tarea que queremos mostrar
-   *
+   * param t : Task    tarea que queremos mostrar
    */
   @Override
   public void visitTask(Task t) {
@@ -56,9 +58,7 @@ public class TreePrinter implements Visitor, Observer {
 
   /**
    * Metodo que implementa el visitor para mostrar el/los intervalo/s.
-   *
-   * @param interval : TimeInterval    TimeInterval que queremos mostrar
-   *
+   * param interval : TimeInterval    TimeInterval que queremos mostrar
    */
   @Override
   public void visitTimeInterval(TimeInterval interval) {

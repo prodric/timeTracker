@@ -3,6 +3,8 @@ import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Clase que representa un intervalo de tiempo relacionado a una tarea.
@@ -12,6 +14,7 @@ public class TimeInterval implements Observer {
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private Duration totalWorkingTime;
+  private static final Logger logger = LoggerFactory.getLogger("TimeInterval");
 
   /**
    * Constructor que crea un intervalo, setteando totalWorkingTime,
@@ -22,6 +25,7 @@ public class TimeInterval implements Observer {
     startTime = LocalDateTime.now().plusSeconds(Clock.getInstance().getPeriod());
     endTime = LocalDateTime.now();
     this.task = task;
+    logger.info("Time Interval for Task: {} has been created", this.task.getName());
   }
 
   /**
@@ -32,6 +36,8 @@ public class TimeInterval implements Observer {
     startTime = LocalDateTime.parse(jsonObject.getString("startTime"));
     endTime = LocalDateTime.parse(jsonObject.getString("endTime"));
     this.task = task;
+    logger.info("Time Interval for Task: {} " +
+        "has been loaded from JSON format successfully", this.task.getName());
   }
 
   /**
@@ -79,13 +85,17 @@ public class TimeInterval implements Observer {
    */
   @Override
   public void update(Observable o, Object arg) {
+    logger.info("Time Interval updating values...");
+
     long period = Clock.getInstance().getPeriod();
     endTime = endTime.plusSeconds(period);
     totalWorkingTime = totalWorkingTime.plusSeconds(period);
 
-    //System.out.println("Interval " + startTime);
-    //System.out.println("Interval " + endTime);
-    //System.out.println("Interval " + totalWorkingTime.toSeconds());
+    logger.debug("Time Interval -> Start Time: {}", this.getStartTime());
+    logger.debug("Time Interval -> End Time: {}", this.getEndTime());
+    logger.debug("Time Interval -> Total Working Time: {}", this.getTotalWorkingTime().toSeconds());
+
+    logger.info("Time Interval values updated");
 
     task.updateTree(period, endTime);
   }
@@ -102,12 +112,16 @@ public class TimeInterval implements Observer {
    * Metodo que convierte un intervalo a un objeto JSON.
    */
   public JSONObject toJson() {
+    logger.trace("Converting Time Interval to JSON format");
+
     JSONObject jsonObject = new JSONObject();
 
     jsonObject.put("task", this.getTask());
     jsonObject.put("startTime", this.getStartTime());
     jsonObject.put("endTime", this.getEndTime());
     jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
+
+    logger.trace("Time Interval conversion to JSON format successful");
 
     return jsonObject;
   }

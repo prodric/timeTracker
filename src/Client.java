@@ -5,18 +5,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Client {
+
+  private static final Logger logger = LoggerFactory.getLogger("Client");
   public static void main(String[] args) throws InterruptedException, IOException {
     //testA();
     //testB();
     //testPersistence();
     //loadTest("file.json");
-    //testSearchByTag();
+    testSearchByTag();
   }
 
   public static Project testA() {
+    logger.info("Starting Test A");
 
     final ArrayList<String> softwareDesign = new ArrayList<>(
         Arrays.asList("java", "flutter"));
@@ -54,12 +59,13 @@ public class Client {
     t2.setTag(secondList);
     t4.setTag(firstMilestone);
 
+    logger.info("Test A Finished");
+
     return root;
   }
 
   public static Project testB() throws InterruptedException {
-
-    Thread.sleep(1500);
+    logger.info("Starting Test B");
 
     Project root = new Project("root", null);
     Project p1 = new Project("Software Design", root);
@@ -79,44 +85,41 @@ public class Client {
 
     TreePrinter printer = new TreePrinter(root);
 
-    System.out.println("Start Test\n");
-    System.out.println("\nTransportation Starts\n");
+    Thread.sleep(1500);
     t5.startTask();
     Thread.sleep(6000);
     t5.stopTask();
-    System.out.println("\nTransportation Stops\n");
     Thread.sleep(2000);
-    System.out.println("\nFirst List Starts\n");
     t1.startTask();
     Thread.sleep(6000);
-    System.out.println("\nSecond List Starts\n");
     t2.startTask();
     Thread.sleep(4000);
-    System.out.println("\nFirst List Stops\n");
     t1.stopTask();
     Thread.sleep(2000);
-    System.out.println("\nSecond List Stops\n");
     t2.stopTask();
     Thread.sleep(2000);
-    System.out.println("\nTransportation Starts\n");
     t5.startTask();
     Thread.sleep(4000);
-    System.out.println("\nTransportation Stops\n");
     t5.stopTask();
 
-
     Clock.getInstance().stopClock();
+
+    logger.info("Test B Finished");
 
     return root;
   }
 
   public static void testPersistence() throws InterruptedException {
+    logger.info("Starting Persistence Test");
     Project root = testB();
 
     root.save(root.getPath(), root.toJson());
+
+    logger.info("Persistence Test Finished");
   }
 
-  public static void testSearchByTag() throws InterruptedException {
+  public static void testSearchByTag() {
+    logger.info("Starting Search By Tag Test");
     Project root = testA();
 
     String[] tags = {"Java", "JAVA", "flutteR", "c++", "pyThon", "SqL", "InTellij", "DaRT"};
@@ -130,9 +133,12 @@ public class Client {
     for (SearchByTag searchByTag : results) {
       System.out.println(searchByTag);
     }
+
+    logger.info("Search By Tag Test Finished");
   }
 
   public static void loadTest(String path) {
+    logger.info("Starting Load Test");
     JSONTokener tokenizer = null;
     try {
       tokenizer = new JSONTokener(new FileReader(path));
@@ -144,7 +150,8 @@ public class Client {
 
     Project loadRoot = new Project(jsonObject, null);
 
-    System.out.println("Arbol cargado exitosamente");
+    logger.info("Tree Loaded Successfully");
+    logger.info("Load Test Finished");
   }
 
 

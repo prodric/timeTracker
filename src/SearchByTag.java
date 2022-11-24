@@ -1,3 +1,6 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,7 @@ public class SearchByTag implements Visitor {
 
   private String tag;
   private List<String> nodesFound;
+  private static final Logger logger = LoggerFactory.getLogger("SearchByTag");
 
   /**
    * Constructor de tu puta madre.
@@ -15,6 +19,7 @@ public class SearchByTag implements Visitor {
   public SearchByTag(Node root, String tag) {
     this.tag = tag;
     nodesFound = new ArrayList<String>();
+    logger.info("Searching for tag: {}", this.tag);
     root.acceptVisitor(this);
   }
 
@@ -23,7 +28,8 @@ public class SearchByTag implements Visitor {
     ArrayList<String> projectTags = (ArrayList<String>) p.getTag();
 
     for (String tag : projectTags) {
-      if (tag.toUpperCase().equals(this.getTag().toUpperCase())) {
+      if (tag.equalsIgnoreCase(this.tag)) {
+        logger.info("Tag: {} has been found", this.tag);
         nodesFound.add(p.getName());
       }
     }
@@ -38,18 +44,16 @@ public class SearchByTag implements Visitor {
     ArrayList<String> taskTags = (ArrayList<String>) t.getTag();
 
     for (String tag : taskTags) {
-      if (tag.toUpperCase().equals(this.getTag().toUpperCase())) {
+      if (tag.equalsIgnoreCase(this.tag)) {
+        logger.info("Tag: {} has been found", this.tag);
         nodesFound.add(t.getName());
       }
     }
   }
 
   @Override
-  public void visitTimeInterval(TimeInterval interval) {}
-
-
-  public String getTag() {
-    return tag;
+  public void visitTimeInterval(TimeInterval interval) {
+    //empty because TimeIntervals don't have tags nor names
   }
 
   @Override

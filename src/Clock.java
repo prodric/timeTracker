@@ -1,3 +1,5 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,6 +17,7 @@ public class Clock extends Observable {
   private TimerTask timerTask;
   private Timer timer;
   private boolean stopClock = false;
+  private static final Logger logger = LoggerFactory.getLogger("Clock");
 
 
   /**
@@ -42,6 +45,7 @@ public class Clock extends Observable {
     if (uniqueInstance == null) {
       uniqueInstance = new Clock();
     }
+    logger.trace("Instance of Clock is being used");
     return uniqueInstance;
   }
 
@@ -49,6 +53,7 @@ public class Clock extends Observable {
    * Metodo que marca el estado del Observable a Changed para poder notificar a todos los observers.
    */
   private void tick() {
+    logger.trace("Clock Tick");
     setChanged();
     notifyObservers();
   }
@@ -64,6 +69,7 @@ public class Clock extends Observable {
    * Metodo que detiene el reloj mediante un flag.
    */
   public void stopClock() {
+    logger.trace("Clock STOPPED");
     stopClock = true;
   }
 

@@ -2,6 +2,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -32,9 +33,11 @@ public class Task extends Node {
     this.timeIntervals = new ArrayList<TimeInterval>();
     if (father != null) {
       father.getChildren().add(this);
+    } else {
+      logger.warn("Task: {} must extend from parent node", this.getName());
     }
     invariant();
-    //logger.debug("Tarea creada exitosamente");
+    logger.info("Task: {} successfully created", this.getName());
   }
 
   /**
@@ -71,15 +74,16 @@ public class Task extends Node {
         lastAdded = timeInterval;
       }
     }
+
     invariant();
+    logger.info("Task: {} loaded successfully from JSON format", this.getName());
   }
 
   private void invariant() {
     assert getFather() != null;
-    assert getName() != "";
+    assert !Objects.equals(getName(), "");
     assert getName().charAt(0) != ' ';
     assert getName().charAt(0) != '\t';
-
   }
 
   /**
@@ -108,6 +112,8 @@ public class Task extends Node {
    * return "void".
    */
   public void startTask() {
+
+    logger.info("Task: {} STARTED", this.getName());
 
     if (getStartTime() == null && getEndTime() == null) {
       setStartTime(LocalDateTime.now().plusSeconds(Clock.getInstance().getPeriod()));
@@ -138,6 +144,7 @@ public class Task extends Node {
     assert getLast() != null;
     assert Clock.getInstance() != null;
 
+    logger.info("Task: {} STOPPED", this.getName());
     Clock.getInstance().deleteObserver(this.getLast());
 
     //postcondiciones
@@ -169,6 +176,8 @@ public class Task extends Node {
     assert getStartTime() != null;
     assert endTime != null;
 
+    logger.info("Task: {} updating values...", this.getName());
+
     this.setEndTime(endTime);
     this.setWorkingTime(getTotalWorkingTime().plusSeconds(period));
     if (getFather() != null) {
@@ -176,12 +185,15 @@ public class Task extends Node {
       this.getFather().updateTree(period, endTime);
     }
 
+    logger.debug("Task: {} -> Start Time: {}", this.getName(), this.getStartTime());
+    logger.debug("Task: {} -> End Time: {}", this.getName(), this.getEndTime());
+    logger.debug("Task: {} -> Total Working Time: {}", this.getName(),
+        this.getTotalWorkingTime().toSeconds());
+
     //postcondiciones
     assert getTotalWorkingTime() != null;
 
-    //System.out.println("Task " + getStartTime());
-    //System.out.println("Task " + getEndTime());
-    //System.out.println("Task " + getWorkingTime().toSeconds());
+    logger.info("Task: {} values updated", this.getName());
   }
 
   /**
@@ -192,6 +204,7 @@ public class Task extends Node {
    */
   @Override
   public JSONObject toJson() {
+    logger.trace("Converting Task: {} to JSON format", this.getName());
     JSONObject jsonObject = new JSONObject();
 
     if (this.getStartTime() == null) {
@@ -216,6 +229,8 @@ public class Task extends Node {
     }
     String key = "ObjectInterval";
     jsonObject.put(key, jsonArray);
+
+    logger.trace("Task: {} conversion to JSON format successful", this.getName());
 
     return jsonObject;
   }

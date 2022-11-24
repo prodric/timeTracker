@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * La clase Project implementa el patron estructural Composite, con
@@ -17,6 +21,7 @@ import org.json.JSONObject;
 public class Project extends Node {
   private ArrayList<Node> children;
   private String path = "file.json";
+  private static final Logger logger = LoggerFactory.getLogger("Project");
 
 
   /**
@@ -28,8 +33,11 @@ public class Project extends Node {
     children = new ArrayList<Node>();
     if (father != null) {
       father.children.add(this);
+    } else {
+      logger.info("Root Project: {} successfully created", this.getName());
     }
     invariant();
+    logger.info("Project: {} successfully created", this.getName());
   }
 
   /**
@@ -68,17 +76,19 @@ public class Project extends Node {
       }
     }
     invariant();
+    logger.info("Project: {} loaded successfully from JSON format", this.getName());
   }
 
   private void invariant() {
-    assert getName() != "";
+    assert !Objects.equals(getName(), "");
     assert getName().charAt(0) != ' ';
     assert getName().charAt(0) != '\t';
   }
 
   public String getPath() {
     assert path != null;
-    assert path != "";
+    assert !path.equals("");
+
     return path;
   }
 
@@ -87,6 +97,7 @@ public class Project extends Node {
    */
   public ArrayList<Node> getChildren() {
     assert children != null;
+
     return children;
   }
 
@@ -109,6 +120,8 @@ public class Project extends Node {
     assert getStartTime() != null;
     assert endTime != null;
 
+    logger.info("Project: {} updating values...", this.getName());
+
     this.setEndTime(endTime);
     this.setWorkingTime(getTotalWorkingTime().plusSeconds(period));
     if (getFather() != null) {
@@ -116,12 +129,15 @@ public class Project extends Node {
       this.getFather().updateTree(period, endTime);
     }
 
+    logger.debug("Project: {} -> Start Time: {}", this.getName(), this.getStartTime());
+    logger.debug("Project: {} -> End Time: {}", this.getName(), this.getEndTime());
+    logger.debug("Project: {} -> Total Working Time: {}", this.getName(),
+        this.getTotalWorkingTime().toSeconds());
+
     //postcondiciones
     assert getTotalWorkingTime() != null;
 
-    //.out.println("Project " + getStartTime());
-    //System.out.println("Project " + getEndTime());
-    //System.out.println("Project " + getWorkingTime().toSeconds());
+    logger.info("Project: {} values updated", this.getName());
   }
 
   /**
@@ -130,6 +146,7 @@ public class Project extends Node {
    */
   @Override
   public JSONObject toJson() {
+    logger.trace("Converting Project: {} to JSON format", this.getName());
     JSONObject jsonObject = new JSONObject();
 
     if (this.getStartTime() == null) {
@@ -153,6 +170,8 @@ public class Project extends Node {
     String key = "Object";
     jsonObject.put(key, jsonArray);
 
+    logger.trace("Project: {} conversion to JSON format successful", this.getName());
+
     return jsonObject;
   }
 
@@ -161,26 +180,29 @@ public class Project extends Node {
    */
   public void save(String path, JSONObject jsonObject) {
 
+    File myObj = new File(path);
+
     try {
-      File myObj = new File(path);
       if (myObj.createNewFile()) {
-        System.out.println("File created: " + myObj.getName());
+        logger.debug("File: {} created", myObj.getName());
       } else {
-        System.out.println("File already exists.");
+        logger.debug("File: {} already exists", myObj.getName());
       }
     } catch (IOException e) {
-      System.out.println("An error occurred.");
+      logger.debug("An error occurred while creating file: {}", myObj.getName());
       e.printStackTrace();
     }
 
 
     try {
+      logger.debug("Writing to file: {}", myObj.getName());
       FileWriter myWriter = new FileWriter(path);
       myWriter.write(jsonObject.toString());
       myWriter.close();
-      System.out.println("Successfully wrote to the file.");
+      System.out.println(".");
+      logger.debug("Successfully wrote to file: {}", myObj.getName());
     } catch (IOException e) {
-      System.out.println("An error occurred.");
+      logger.debug("An error occurred while writing to file: {}", myObj.getName());
       e.printStackTrace();
     }
   }
