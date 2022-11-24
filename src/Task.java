@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Task extends Node {
 
-  private static final Logger logger = LoggerFactory.getLogger("Task");
+  private static final Logger logger = LoggerFactory.getLogger("Fita1");
   private List<TimeInterval> timeIntervals;
   private TimeInterval lastAdded;
 

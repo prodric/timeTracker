@@ -11,7 +11,7 @@ public class SearchByTag implements Visitor {
 
   private String tag;
   private List<String> nodesFound;
-  private static final Logger logger = LoggerFactory.getLogger("SearchByTag");
+  private static final Logger logger = LoggerFactory.getLogger("Fita2");
 
   /**
    * Constructor de tu puta madre.
