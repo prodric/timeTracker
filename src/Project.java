@@ -85,7 +85,7 @@ public class Project extends Node {
   }
 
   /**
-   * Getter para obtener el recorrido del arbol.
+   * Getter para obtener el nombre del fichero donde se guardará el arbol.
    */
   public String getPath() {
     assert path != null;

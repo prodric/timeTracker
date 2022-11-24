@@ -122,7 +122,7 @@ public class Client {
   }
 
   /**
-   * Test que comprueba las requisitos de la fita 1.
+   * Test que comprueba el requisito de persistencia de la fita 1.
    */
   public static void testPersistence() throws InterruptedException {
     logger.info("Starting Persistence Test");
@@ -157,7 +157,7 @@ public class Client {
   }
 
   /**
-   * Funcion para cargar los diferentes tests.
+   * Test para comprobar que se carga bien el arbol.
    */
   public static void loadTest(String path) {
     logger.info("Starting Load Test");
