@@ -2,13 +2,19 @@
 
 class Project extends Node{
     -children : ArrayList<Node>
+    -path : String
+    -{static}logger : Logger
+    -invariant()
     +acceptVisitor(visitor : Visitor)
     +updateTree(period : Long, endTime : LocalDateTime)
     +save(path : String, jsonObject : JSONObject)
+
 }
 
 abstract class Node {
     -name : string
+    -tags : List<String>
+    -father : Node
     -startTime : LocalDateTime
     -endTime : LocalDateTime
     -totalWorkingTime : Duration
@@ -18,8 +24,10 @@ abstract class Node {
 }
 
 class Task extends Node{
+    -{static}logger : Logger
     -timeIntervals : List<TimeInterval>
     -lastAdded : TimeInterval
+    -invariant()
     +startTask()
     +stopTask()
     +acceptVisitor(visit : Visitor)
@@ -29,6 +37,11 @@ class Task extends Node{
 
 class Client {
 + {static}main(args : String[])
++{static}testA() : Project
++{static}testB() : Project
++{static}testPersistance()
++{static}testSearchByTag()
++{static}loadTest()
 }
 
 class TimeInterval {
@@ -36,6 +49,7 @@ class TimeInterval {
     -startTime : LocalDateTime
     -endTime : LocalDateTime
     -totalWorkingTime : Duration
+    -{static} logger : Logger
     +update(o : Observable, arg : Object)
     +acceptVisitor(visit : Visitor)
     +toJson() : JSONObject
@@ -54,11 +68,12 @@ package java.util <<Folder>> {
 }
 
 class Clock{
-    -timerTask : Duration
+    -timerTask : TimerTask
     -timer : Timer
     -{static}period : long
     -{static}uniqueInstance : Clock
     -stopClock : boolean
+    -{static}logger : Logger
     +stopClock()
     -tick()
     +getInstance() : Clock
@@ -71,11 +86,21 @@ interface Visitor {
 }
 class TreePrinter implements Visitor{
      -root : Project
+     -{static}logger : Logger
      -formatter : DateTimeFormatter
      +visitTask(t : Task)
      +visitProject(p : Project)
      +visitTimeInterval(interval : TimeInterval)
      +update(o : Observable, arg : Object)
+}
+class SearchByTag implements Visitor{
+    -tag: String
+    -nodesFound: List<String>
+    -{static}logger: Logger
+    +visitTask(t : Task)
+    +visitProject(p : Project)
+    +visitTimeInterval(interval : TimeInterval)
+    +toString() : String
 }
 Visitor -[hidden]right- Observable
 Node <--* Project : "*" nodes
