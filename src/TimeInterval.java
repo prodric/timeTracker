@@ -19,6 +19,7 @@ public class TimeInterval implements Observer {
   /**
    * Constructor que crea un intervalo, setteando totalWorkingTime,
    * startTime y endTime a valores por defecto.
+   * param task : Task    tarea a la que pertenece el intervalo
    */
   public TimeInterval(Task task) {
     totalWorkingTime = Duration.ZERO;
@@ -30,6 +31,9 @@ public class TimeInterval implements Observer {
 
   /**
    * Constructor que crea un intervalo a partir de un JSONObject.
+   * param jsonObject : JSONObject     JSONObject del cual se extrae la informacion para
+   * reconstruir el intervalo.
+   * param task : Task   tarea a la que pertenece el intervalo
    */
   public TimeInterval(JSONObject jsonObject, Task task) {
     totalWorkingTime = Duration.ofSeconds(jsonObject.getLong("totalWorkingTime"));
@@ -103,6 +107,8 @@ public class TimeInterval implements Observer {
   /**
    * Metodo que acepta el visitor para recorrer el/los intervalo/s.
    * En cada intervalo realiza una operacion determinada por el visitor.
+   * param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar
+   * la llamada a visitTimeInterval().
    */
   public void acceptVisitor(Visitor visit) {
     visit.visitTimeInterval(this);

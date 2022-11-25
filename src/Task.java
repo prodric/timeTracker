@@ -44,7 +44,7 @@ public class Task extends Node {
    * Constructor que crea una tarea a partir de un JSONObject.
    * param jsonObject : JSONObject     JSONObject del cual se extrae la informacion para
    * reconstruir la tarea.
-   * param father     : Project   padre de la tarea.
+   * param father : Project   padre de la tarea.
    * return void.
    */
   public Task(JSONObject jsonObject, Project father) {

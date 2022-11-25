@@ -26,6 +26,8 @@ public class Project extends Node {
   /**
    * Constructor que crea un proyecto, añadiendolo como proyecto hijo
    * en el caso de que no sea el root.
+   * param name : String    nombre del proyecto
+   * param father : Project     padre del proyecto que se creará
    */
   public Project(String name, Project father) {
     super(name, father);
@@ -41,6 +43,8 @@ public class Project extends Node {
 
   /**
    * Constructor que crea un proyecto a partir de un JSONObject.
+   * param jsonObject : JSONObject    objeto del cual extraemos el proyecto
+   * param father : Project   padre del proyecto que se creará
    */
   public Project(JSONObject jsonObject, Project father) {
     super(jsonObject, father);
@@ -78,6 +82,9 @@ public class Project extends Node {
     logger.info("Project: {} loaded successfully from JSON format", this.getName());
   }
 
+  /**
+   * Metodo que implementa el invariante global de la clase.
+   */
   private void invariant() {
     assert !Objects.equals(getName(), "");
     assert getName().charAt(0) != ' ';
@@ -106,6 +113,8 @@ public class Project extends Node {
   /**
    * Metodo que acepta el visitor para recorrer el/los proyecto/s
    * y realizar una operacion determinada por el visitor.
+   * param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar
+   * la llamada a visitTask().
    */
   public void acceptVisitor(Visitor visit) {
     assert visit != null;
@@ -114,6 +123,9 @@ public class Project extends Node {
 
   /**
    * Metodo que actualiza el arbol modificando el endTime, el totalWorkingTime.
+   * param period  : Long     periodo de tiempo que tenemos que sumar a las variables LocalDateTime.
+   * param endTime : LocalDateTime  variable usada para actualizar endTime a los padres de la tarea.
+   * return "void".
    */
   @Override
   public void updateTree(Long period, LocalDateTime endTime) {
@@ -145,6 +157,8 @@ public class Project extends Node {
   /**
    * Metodo que convierte un proyecto a un objeto JSON,
    * también convierte a cada proyecto de la lista children.
+   * param "void".
+   * return JSONObject.
    */
   @Override
   public JSONObject toJson() {
@@ -179,6 +193,8 @@ public class Project extends Node {
 
   /**
    * Metodo que guarda el jsonObject en el directorio especificado.
+   * param path : String    directorio especificado
+   * param jsonObject : JSONObject    objeto que se desea guardar
    */
   public void save(String path, JSONObject jsonObject) {
 

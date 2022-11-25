@@ -33,6 +33,9 @@ public abstract class Node {
   }
 
 
+  /**
+   * Constructor que crea un Nodo a partir de un JSONObject.
+   */
   public Node(JSONObject jsonObject, Project father) {
     this.father = father;
   }
