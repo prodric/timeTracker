@@ -19,7 +19,7 @@
         <appender-ref ref="FILE" />
     </root>
 
-    <logger name="Fita1" level="INFO"/>
+    <logger name="Fita1" level="OFF"/>
     <logger name="Fita2" level="INFO"/>
 
 </configuration>

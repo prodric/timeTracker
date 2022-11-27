@@ -19,11 +19,11 @@ public class Client {
    * Main del programa principal que incluye los diferentes tests.
    */
   public static void main(String[] args) throws InterruptedException, IOException {
-    testA();
+    //testA();
     //testB();
-    //testPersistence();
+    testPersistence();
     //loadTest("file.json");
-    //testSearchByTag();
+    testSearchByTag();
   }
 
   /**
