@@ -1,10 +1,13 @@
+package core;
+
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Clase que representa un intervalo de tiempo relacionado a una tarea.
@@ -19,28 +22,28 @@ public class TimeInterval implements Observer {
   /**
    * Constructor que crea un intervalo, setteando totalWorkingTime,
    * startTime y endTime a valores por defecto.
-   * param task : Task    tarea a la que pertenece el intervalo
+   * param task : main.Task    tarea a la que pertenece el intervalo
    */
   public TimeInterval(Task task) {
     totalWorkingTime = Duration.ZERO;
     startTime = LocalDateTime.now().plusSeconds(Clock.getInstance().getPeriod());
     endTime = LocalDateTime.now();
     this.task = task;
-    logger.info("Time Interval for Task: {} has been created", this.task.getName());
+    logger.info("Time Interval for main.Task: {} has been created", this.task.getName());
   }
 
   /**
    * Constructor que crea un intervalo a partir de un JSONObject.
    * param jsonObject : JSONObject     JSONObject del cual se extrae la informacion para
    * reconstruir el intervalo.
-   * param task : Task   tarea a la que pertenece el intervalo
+   * param task : main.Task   tarea a la que pertenece el intervalo
    */
   public TimeInterval(JSONObject jsonObject, Task task) {
     totalWorkingTime = Duration.ofSeconds(jsonObject.getLong("totalWorkingTime"));
     startTime = LocalDateTime.parse(jsonObject.getString("startTime"));
     endTime = LocalDateTime.parse(jsonObject.getString("endTime"));
     this.task = task;
-    logger.info("Time Interval for Task: {} "
+    logger.info("Time Interval for main.Task: {} "
         + "has been loaded from JSON format successfully", this.task.getName());
   }
 
@@ -107,7 +110,7 @@ public class TimeInterval implements Observer {
   /**
    * Metodo que acepta el visitor para recorrer el/los intervalo/s.
    * En cada intervalo realiza una operacion determinada por el visitor.
-   * param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar
+   * param visit : main.Visitor   objeto de la clase main.Visitor que pasamos al metodo para poder realizar
    * la llamada a visitTimeInterval().
    */
   public void acceptVisitor(Visitor visit) {

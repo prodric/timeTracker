@@ -1,19 +1,22 @@
+package core;
+
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Classe principal que contiene el main del proyecto y los diferentes tests.
  */
 public class Client {
 
-  private static final Logger logger = LoggerFactory.getLogger("Client");
+  private static final Logger logger = LoggerFactory.getLogger("main.Client");
 
   /**
    * Main del programa principal que incluye los diferentes tests.
@@ -50,10 +53,10 @@ public class Client {
     Project p2 = new Project("Software Testing", root);
     Project p3 = new Project("Databases", root);
 
-    Task t5 = new Task("Task Transportation", root);
+    Task t5 = new Task("main.Task Transportation", root);
 
     Project p5 = new Project("Problems", p1);
-    Project p6 = new Project("Project Time Tracker", p1);
+    Project p6 = new Project("main.Project Time Tracker", p1);
 
     final Task t1 = new Task("First List", p5);
     final Task t2 = new Task("Second List", p5);
@@ -84,10 +87,10 @@ public class Client {
     Project p2 = new Project("Software Testing", root);
     Project p3 = new Project("Databases", root);
 
-    Task t5 = new Task("Task Transportation", root);
+    Task t5 = new Task("main.Task Transportation", root);
 
     Project p5 = new Project("Problems", p1);
-    Project p6 = new Project("Project Time Tracker", p1);
+    Project p6 = new Project("main.Project Time Tracker", p1);
 
     final Task t1 = new Task("First List", p5);
     final Task t2 = new Task("Second List", p5);

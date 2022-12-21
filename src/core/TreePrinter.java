@@ -1,11 +1,14 @@
-import java.util.Observable;
-import java.util.Observer;
+package core;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Observable;
+import java.util.Observer;
+
 
 /**
- * TreePrinter nos permite printar todo el arbol, gracias
+ * main.TreePrinter nos permite printar todo el arbol, gracias
  * a visitar los nodos del proyecto principal cada vez que se actualiza
  * el clock.
  */
@@ -24,11 +27,11 @@ public class TreePrinter implements Visitor, Observer {
 
   /**
    * Metodo que implementa el visitor para mostrar el/los proyecto/s.
-   * param p : Project    proyecto que queremos mostrar
+   * param p : main.Project    proyecto que queremos mostrar
    */
   public void visitProject(Project p) {
     if (!(p.getStartTime() == null)) {
-      System.out.printf("%-35s", "Project " + p.getName());
+      System.out.printf("%-35s", "main.Project " + p.getName());
       System.out.printf("%-35s", "child of " + p.getFatherName());
       System.out.printf("%-35s", p.getStartTime());
       System.out.printf("%-35s", p.getEndTime());
@@ -42,12 +45,12 @@ public class TreePrinter implements Visitor, Observer {
 
   /**
    * Metodo que implementa el visitor para mostrar la/s tarea/s.
-   * param t : Task    tarea que queremos mostrar
+   * param t : main.Task    tarea que queremos mostrar
    */
   @Override
   public void visitTask(Task t) {
     if (!(t.getStartTime() == null)) {
-      System.out.printf("%-35s", "Task " + t.getName());
+      System.out.printf("%-35s", "main.Task " + t.getName());
       System.out.printf("%-35s", "child of " + t.getFatherName());
       System.out.printf("%-35s", t.getStartTime());
       System.out.printf("%-35s", t.getEndTime());
@@ -61,7 +64,7 @@ public class TreePrinter implements Visitor, Observer {
 
   /**
    * Metodo que implementa el visitor para mostrar el/los intervalo/s.
-   * param interval : TimeInterval    TimeInterval que queremos mostrar
+   * param interval : main.TimeInterval    main.TimeInterval que queremos mostrar
    */
   @Override
   public void visitTimeInterval(TimeInterval interval) {

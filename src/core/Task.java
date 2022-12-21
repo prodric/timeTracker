@@ -1,19 +1,22 @@
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+package core;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 
 /**
- * La funcion principal de la classe Task es la de iniciar o parar una tarea
+ * La funcion principal de la classe main.Task es la de iniciar o parar una tarea
  * guardando sus intervalos de tiempo gracias al patron de comportamiento Observer,
  * añadiendo o eliminando el intervalo de ser observado por clock.
- * A su vez tambien utiliza el patron visitor para que TreePrinter visite cada tarea
+ * A su vez tambien utiliza el patron visitor para que main.TreePrinter visite cada tarea
  * y la pueda imprimir correctamente.
  */
 public class Task extends Node {
@@ -22,10 +25,12 @@ public class Task extends Node {
   private List<TimeInterval> timeIntervals;
   private TimeInterval lastAdded;
 
+  private int id;
+
   /**
    * Constructor que crea una tarea.
    * param name   : String     nombre de la tarea.
-   * param father : Project   padre de la tarea.
+   * param father : main.Project   padre de la tarea.
    * return void.
    */
   public Task(String name, Project father) {
@@ -34,17 +39,17 @@ public class Task extends Node {
     if (father != null) {
       father.getChildren().add(this);
     } else {
-      logger.warn("Task: {} must extend from parent node", this.getName());
+      logger.warn("main.Task: {} must extend from parent node", this.getName());
     }
     invariant();
-    logger.info("Task: {} successfully created", this.getName());
+    logger.info("main.Task: {} successfully created", this.getName());
   }
 
   /**
    * Constructor que crea una tarea a partir de un JSONObject.
    * param jsonObject : JSONObject     JSONObject del cual se extrae la informacion para
    * reconstruir la tarea.
-   * param father : Project   padre de la tarea.
+   * param father : main.Project   padre de la tarea.
    * return void.
    */
   public Task(JSONObject jsonObject, Project father) {
@@ -76,7 +81,7 @@ public class Task extends Node {
     }
 
     invariant();
-    logger.info("Task: {} loaded successfully from JSON format", this.getName());
+    logger.info("main.Task: {} loaded successfully from JSON format", this.getName());
   }
 
   private void invariant() {
@@ -113,7 +118,7 @@ public class Task extends Node {
    */
   public void startTask() {
 
-    logger.info("Task: {} STARTED", this.getName());
+    logger.info("main.Task: {} STARTED", this.getName());
 
     if (getStartTime() == null && getEndTime() == null) {
       setStartTime(LocalDateTime.now().plusSeconds(Clock.getInstance().getPeriod()));
@@ -144,7 +149,7 @@ public class Task extends Node {
     assert getLast() != null;
     assert Clock.getInstance() != null;
 
-    logger.info("Task: {} STOPPED", this.getName());
+    logger.info("main.Task: {} STOPPED", this.getName());
     Clock.getInstance().deleteObserver(this.getLast());
 
     //postcondiciones
@@ -154,7 +159,7 @@ public class Task extends Node {
   /**
    * Metodo que acepta el visitor para recorrer la/s tarea/s y realizar
    * una operacion determinada por el visitor.
-   * param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar
+   * param visit : main.Visitor   objeto de la clase main.Visitor que pasamos al metodo para poder realizar
    * la llamada a visitTask().
    * return "void".
    */
@@ -176,7 +181,7 @@ public class Task extends Node {
     assert getStartTime() != null;
     assert endTime != null;
 
-    logger.info("Task: {} updating values...", this.getName());
+    logger.info("main.Task: {} updating values...", this.getName());
 
     this.setEndTime(endTime);
     this.setWorkingTime(getTotalWorkingTime().plusSeconds(period));
@@ -185,26 +190,26 @@ public class Task extends Node {
       this.getFather().updateTree(period, endTime);
     }
 
-    logger.debug("Task: {} -> Start Time: {}", this.getName(), this.getStartTime());
-    logger.debug("Task: {} -> End Time: {}", this.getName(), this.getEndTime());
-    logger.debug("Task: {} -> Total Working Time: {}", this.getName(),
+    logger.debug("main.Task: {} -> Start Time: {}", this.getName(), this.getStartTime());
+    logger.debug("main.Task: {} -> End Time: {}", this.getName(), this.getEndTime());
+    logger.debug("main.Task: {} -> Total Working Time: {}", this.getName(),
         this.getTotalWorkingTime().toSeconds());
 
     //postcondiciones
     assert getTotalWorkingTime() != null;
 
-    logger.info("Task: {} values updated", this.getName());
+    logger.info("main.Task: {} values updated", this.getName());
   }
 
   /**
    * Metodo que convierte una tarea a un objeto JSON,
-   * también convierte a cada TimeInterval de la lista timeIntervals.
+   * también convierte a cada main.TimeInterval de la lista timeIntervals.
    * param "void".
    * return JSONObject.
    */
   @Override
   public JSONObject toJson() {
-    logger.trace("Converting Task: {} to JSON format", this.getName());
+    logger.trace("Converting main.Task: {} to JSON format", this.getName());
     JSONObject jsonObject = new JSONObject();
 
     if (this.getStartTime() == null) {
@@ -230,7 +235,7 @@ public class Task extends Node {
     String key = "ObjectInterval";
     jsonObject.put(key, jsonArray);
 
-    logger.trace("Task: {} conversion to JSON format successful", this.getName());
+    logger.trace("main.Task: {} conversion to JSON format successful", this.getName());
 
     return jsonObject;
   }

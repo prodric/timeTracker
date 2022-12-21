@@ -1,15 +1,18 @@
+package core;
+
+import org.json.JSONObject;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONObject;
 
 /**
  * Representa cada nodo del arbol de tareas y proyectos.
  * Siendo esta la clase abstracta de la cual heredan las clases
- * Task y Project, a si misma usada por el patron estructural Composite
- * en la clase Project.
+ * main.Task y main.Project, a si misma usada por el patron estructural Composite
+ * en la clase main.Project.
  */
 public abstract class Node {
   private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -19,11 +22,14 @@ public abstract class Node {
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private Duration totalWorkingTime;
+  private int id;
 
   /**
    * Constructor por defecto de un nodo.
    */
   public Node(String name, Project father) {
+    Id id = Id.getInstance();
+    this.id = id.generateId();
     this.name = name;
     this.father = father;
     this.tags = new ArrayList<String>();
@@ -53,6 +59,7 @@ public abstract class Node {
     return father;
   }
 
+  public int getId() {return id;}
   /**
    * Getter para obtener el nombre del padre de un proyecto/tarea.
    */

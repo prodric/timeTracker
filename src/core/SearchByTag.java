@@ -1,3 +1,5 @@
+package core;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -5,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Clase que implementa la interfaz Visitor.
- * SearchByTag nos permite visitar cada nodo del
+ * Clase que implementa la interfaz main.Visitor.
+ * main.SearchByTag nos permite visitar cada nodo del
  * arbol de actividades y buscar los proyectos y tareas con
  * un cierto tag.
  */
@@ -17,8 +19,8 @@ public class SearchByTag implements Visitor {
   private static final Logger logger = LoggerFactory.getLogger("Fita2");
 
   /**
-   * Constructor por defecto de SearchByTag.
-   * param root : Node    nodo raiz del arbol de actividades
+   * Constructor por defecto de main.SearchByTag.
+   * param root : main.Node    nodo raiz del arbol de actividades
    * param tag : String   tag que se buscará en el arbol
    */
   public SearchByTag(Node root, String tag) {
@@ -30,7 +32,7 @@ public class SearchByTag implements Visitor {
 
   /**
    * Metodo que implementa el visitor para buscar el tag en el proyecto.
-   * param p : Project    proyecto donde queremos buscar el tag
+   * param p : main.Project    proyecto donde queremos buscar el tag
    */
   @Override
   public void visitProject(Project p) {
@@ -50,7 +52,7 @@ public class SearchByTag implements Visitor {
 
   /**
    * Metodo que implementa el visitor para buscar el tag en la/s tarea/s.
-   * param t : Task    tarea donde queremos buscar el tag
+   * param t : main.Task    tarea donde queremos buscar el tag
    */
   @Override
   public void visitTask(Task t) {
@@ -70,7 +72,7 @@ public class SearchByTag implements Visitor {
   }
 
   /**
-   * Metodo toString sobreescrito para poder printar objetos SearchByTag.
+   * Metodo toString sobreescrito para poder printar objetos main.SearchByTag.
    */
   @Override
   public String toString() {

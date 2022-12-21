@@ -1,12 +1,15 @@
-import java.util.Observable;
-import java.util.Timer;
-import java.util.TimerTask;
+package core;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
- * La classe Clock nos permite iniciar y parar el reloj,
+ * La classe main.Clock nos permite iniciar y parar el reloj,
  * implementando el patron creacional Singleton,
  * con el fin de que el reloj se instancie una unica vez y por
  * otro lado proporcione un punto de acceso global para todo el
@@ -46,7 +49,7 @@ public class Clock extends Observable {
     if (uniqueInstance == null) {
       uniqueInstance = new Clock();
     }
-    logger.trace("Instance of Clock is being used");
+    logger.trace("Instance of main.Clock is being used");
     return uniqueInstance;
   }
 
@@ -54,7 +57,7 @@ public class Clock extends Observable {
    * Metodo que marca el estado del Observable a Changed para poder notificar a todos los observers.
    */
   private void tick() {
-    logger.trace("Clock Tick");
+    logger.trace("main.Clock Tick");
     setChanged();
     notifyObservers();
   }
@@ -70,7 +73,7 @@ public class Clock extends Observable {
    * Metodo que detiene el reloj mediante un flag.
    */
   public void stopClock() {
-    logger.trace("Clock STOPPED");
+    logger.trace("main.Clock STOPPED");
     stopClock = true;
   }
 

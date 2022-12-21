@@ -1,3 +1,10 @@
+package core;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -5,13 +12,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * La clase Project implementa el patron estructural Composite, con
+ * La clase main.Project implementa el patron estructural Composite, con
  * el fin de que un proyecto pueda estar compuesto de otros
  * nodos ya sean proyectos o tareas.
  * Tambien implementa los metodos necesarios para convertir un proyecto
@@ -23,11 +26,13 @@ public class Project extends Node {
   private static final Logger logger = LoggerFactory.getLogger("Fita1");
 
 
+
+
   /**
    * Constructor que crea un proyecto, añadiendolo como proyecto hijo
    * en el caso de que no sea el root.
    * param name : String    nombre del proyecto
-   * param father : Project     padre del proyecto que se creará
+   * param father : main.Project     padre del proyecto que se creará
    */
   public Project(String name, Project father) {
     super(name, father);
@@ -35,16 +40,16 @@ public class Project extends Node {
     if (father != null) {
       father.children.add(this);
     } else {
-      logger.info("Root Project: {} successfully created", this.getName());
+      logger.info("Root main.Project: {} successfully created", this.getName());
     }
     invariant();
-    logger.info("Project: {} successfully created", this.getName());
+    logger.info("main.Project: {} successfully created", this.getName());
   }
 
   /**
    * Constructor que crea un proyecto a partir de un JSONObject.
    * param jsonObject : JSONObject    objeto del cual extraemos el proyecto
-   * param father : Project   padre del proyecto que se creará
+   * param father : main.Project   padre del proyecto que se creará
    */
   public Project(JSONObject jsonObject, Project father) {
     super(jsonObject, father);
@@ -79,7 +84,7 @@ public class Project extends Node {
       }
     }
     invariant();
-    logger.info("Project: {} loaded successfully from JSON format", this.getName());
+    logger.info("main.Project: {} loaded successfully from JSON format", this.getName());
   }
 
   /**
@@ -113,7 +118,7 @@ public class Project extends Node {
   /**
    * Metodo que acepta el visitor para recorrer el/los proyecto/s
    * y realizar una operacion determinada por el visitor.
-   * param visit : Visitor   objeto de la clase Visitor que pasamos al metodo para poder realizar
+   * param visit : main.Visitor   objeto de la clase main.Visitor que pasamos al metodo para poder realizar
    * la llamada a visitTask().
    */
   public void acceptVisitor(Visitor visit) {
@@ -134,7 +139,7 @@ public class Project extends Node {
     assert getStartTime() != null;
     assert endTime != null;
 
-    logger.info("Project: {} updating values...", this.getName());
+    logger.info("main.Project: {} updating values...", this.getName());
 
     this.setEndTime(endTime);
     this.setWorkingTime(getTotalWorkingTime().plusSeconds(period));
@@ -143,15 +148,15 @@ public class Project extends Node {
       this.getFather().updateTree(period, endTime);
     }
 
-    logger.debug("Project: {} -> Start Time: {}", this.getName(), this.getStartTime());
-    logger.debug("Project: {} -> End Time: {}", this.getName(), this.getEndTime());
-    logger.debug("Project: {} -> Total Working Time: {}", this.getName(),
+    logger.debug("main.Project: {} -> Start Time: {}", this.getName(), this.getStartTime());
+    logger.debug("main.Project: {} -> End Time: {}", this.getName(), this.getEndTime());
+    logger.debug("main.Project: {} -> Total Working Time: {}", this.getName(),
         this.getTotalWorkingTime().toSeconds());
 
     //postcondiciones
     assert getTotalWorkingTime() != null;
 
-    logger.info("Project: {} values updated", this.getName());
+    logger.info("main.Project: {} values updated", this.getName());
   }
 
   /**
@@ -162,7 +167,7 @@ public class Project extends Node {
    */
   @Override
   public JSONObject toJson() {
-    logger.trace("Converting Project: {} to JSON format", this.getName());
+    logger.trace("Converting main.Project: {} to JSON format", this.getName());
     JSONObject jsonObject = new JSONObject();
 
     if (this.getStartTime() == null) {
@@ -186,7 +191,7 @@ public class Project extends Node {
     String key = "Object";
     jsonObject.put(key, jsonArray);
 
-    logger.trace("Project: {} conversion to JSON format successful", this.getName());
+    logger.trace("main.Project: {} conversion to JSON format successful", this.getName());
 
     return jsonObject;
   }
