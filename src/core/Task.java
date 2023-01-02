@@ -24,6 +24,7 @@ public class Task extends Node {
   private static final Logger logger = LoggerFactory.getLogger("Fita1");
   private List<TimeInterval> timeIntervals;
   private TimeInterval lastAdded;
+  private Boolean active = false;
 
   /**
    * Constructor que crea una tarea.
@@ -126,6 +127,7 @@ public class Task extends Node {
     TimeInterval timeInterval = new TimeInterval(this);
     timeIntervals.add(timeInterval);
     lastAdded = timeInterval;
+    active = true;
     Clock.getInstance().addObserver(timeInterval);
 
     //postcondiciones
@@ -149,6 +151,7 @@ public class Task extends Node {
 
     logger.info("main.Task: {} STOPPED", this.getName());
     Clock.getInstance().deleteObserver(this.getLast());
+    active = false;
 
     //postcondiciones
     assert Clock.getInstance().countObservers() == numObservers - 1;
@@ -243,7 +246,7 @@ public class Task extends Node {
     JSONObject json = new JSONObject();
     json.put("class", "task");
     super.toJson(json);
-    //json.put("active", active);
+    json.put("active", active);
     if (depth>0) {
       JSONArray jsonIntervals = new JSONArray();
       for (TimeInterval interval : timeIntervals) {
