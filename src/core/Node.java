@@ -50,7 +50,7 @@ public abstract class Node {
 
   public abstract void updateTree(Long period, LocalDateTime endTime);
 
-  protected abstract JSONObject toJson();
+  public abstract JSONObject toJson();
 
   /**
    * Getter para obtener el padre de un proyecto/tarea.
