@@ -25,8 +25,6 @@ public class Task extends Node {
   private List<TimeInterval> timeIntervals;
   private TimeInterval lastAdded;
 
-  private int id;
-
   /**
    * Constructor que crea una tarea.
    * param name   : String     nombre de la tarea.
@@ -238,5 +236,23 @@ public class Task extends Node {
     logger.trace("main.Task: {} conversion to JSON format successful", this.getName());
 
     return jsonObject;
+  }
+
+  public JSONObject toJson(int depth) {
+    // depth not used here
+    JSONObject json = new JSONObject();
+    json.put("class", "task");
+    super.toJson(json);
+    //json.put("active", active);
+    if (depth>0) {
+      JSONArray jsonIntervals = new JSONArray();
+      for (TimeInterval interval : timeIntervals) {
+        jsonIntervals.put(interval.toJson());
+      }
+      json.put("intervals", jsonIntervals);
+    } else {
+      json.put("intervals", new JSONArray());
+    }
+    return json;
   }
 }

@@ -115,26 +115,26 @@ public class WebServer {
       switch (tokens[0]) {
         case "get_tree" : {
           int id = Integer.parseInt(tokens[1]);
-          Node Node = findNodeById(id);
+          Node Node = findActivityById(id);
           assert (Node!=null);
           body = Node.toJson(1).toString();
           break;
         }
         case "start": {
           int id = Integer.parseInt(tokens[1]);
-          Node Node = findNodeById(id);
+          Node Node = findActivityById(id);
           assert (Node!=null);
           Task task = (Task) Node;
-          task.start();
+          task.startTask();
           body = "{}";
           break;
         }
         case "stop": {
           int id = Integer.parseInt(tokens[1]);
-          Node Node = findNodeById(id);
+          Node Node = findActivityById(id);
           assert (Node!=null);
           Task task = (Task) Node;
-          task.stop();
+          task.stopTask();
           body = "{}";
           break;
         }

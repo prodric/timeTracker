@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,6 +19,7 @@ public class TimeInterval implements Observer {
   private LocalDateTime endTime;
   private Duration totalWorkingTime;
   private static final Logger logger = LoggerFactory.getLogger("Fita1");
+  private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
   /**
    * Constructor que crea un intervalo, setteando totalWorkingTime,
@@ -120,18 +122,21 @@ public class TimeInterval implements Observer {
   /**
    * Metodo que convierte un intervalo a un objeto JSON.
    */
+
   public JSONObject toJson() {
     logger.trace("Converting Time Interval to JSON format");
 
-    JSONObject jsonObject = new JSONObject();
-
-    jsonObject.put("task", this.getTask());
-    jsonObject.put("startTime", this.getStartTime());
-    jsonObject.put("endTime", this.getEndTime());
-    jsonObject.put("totalWorkingTime", this.getTotalWorkingTime().toSeconds());
+    JSONObject json = new JSONObject();
+    json.put("class", "interval");
+    json.put("id", task.getId());
+    json.put("initialDate", startTime==null
+        ? JSONObject.NULL : formatter.format(startTime));
+    json.put("finalDate", endTime==null
+        ? JSONObject.NULL : formatter.format(endTime));
+    json.put("duration", totalWorkingTime.toSeconds());
+    //json.put("active", active);
 
     logger.trace("Time Interval conversion to JSON format successful");
-
-    return jsonObject;
+    return json;
   }
 }
