@@ -18,7 +18,7 @@ public abstract class Node {
   private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
   private String name;
   private List<String> tags;
-  private Node father;
+  private final Node father;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private Duration totalWorkingTime;
@@ -49,8 +49,10 @@ public abstract class Node {
   public abstract void acceptVisitor(Visitor visit);
 
   public abstract void updateTree(Long period, LocalDateTime endTime);
+  public abstract JSONObject toJson(int depth);
 
   public abstract JSONObject toJson();
+
 
   /**
    * Getter para obtener el padre de un proyecto/tarea.
@@ -111,5 +113,15 @@ public abstract class Node {
 
   public void setWorkingTime(Duration workingTime) {
     this.totalWorkingTime = workingTime;
+  }
+
+  protected void toJson(JSONObject json) {
+    json.put("id", id);
+    json.put("name", name);
+    json.put("initialDate", startTime==null
+        ? JSONObject.NULL : formatter.format(startTime));
+    json.put("finalDate", endTime==null
+        ? JSONObject.NULL : formatter.format(endTime));
+    json.put("duration", totalWorkingTime.toSeconds());
   }
 }

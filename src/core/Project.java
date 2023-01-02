@@ -196,6 +196,21 @@ public class Project extends Node {
     return jsonObject;
   }
 
+  public JSONObject toJson(int depth) {
+    JSONObject json = new JSONObject();
+    json.put("class", "project");
+    super.toJson(json);
+    if (depth>0) {
+      JSONArray jsonActivities = new JSONArray();
+      for (Node activity : children) {
+        jsonActivities.put(activity.toJson(depth - 1));
+        // important: decrement depth
+      }
+      json.put("activities", jsonActivities);
+    }
+    return json;
+  }
+
   /**
    * Metodo que guarda el jsonObject en el directorio especificado.
    * param path : String    directorio especificado
