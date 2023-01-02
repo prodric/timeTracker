@@ -144,7 +144,6 @@ public class Task extends Node {
   public void stopTask() {
     final int numObservers = Clock.getInstance().countObservers();
     //precondiciones
-    //
     assert getLast() != null;
     assert Clock.getInstance() != null;
 
