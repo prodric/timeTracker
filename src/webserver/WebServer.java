@@ -1,8 +1,6 @@
 package webserver;
 
-import core.Node;
-import core.Task;
-
+import core.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,13 +16,13 @@ import java.util.StringTokenizer;
 public class WebServer {
   private static final int PORT = 8080; // port to listen to
 
-  private Node currentActivity;
+  private Node currentNode;
   private final Node root;
 
   public WebServer(Node root) {
     this.root = root;
     System.out.println(root);
-    currentActivity = root;
+    currentNode = root;
     try {
       ServerSocket serverConnect = new ServerSocket(PORT);
       System.out.println("Server started.\nListening for connections on port : " + PORT + " ...\n");
@@ -39,14 +37,14 @@ public class WebServer {
     }
   }
 
-  private Node findActivityById(int id) {
-    return root.findActivityById(id);
+  private Node findNodeById(int id) {
+    return root.findNodeById(id);
   }
 
   private class SocketThread extends Thread {
     // SocketThread sees WebServer attributes
     private final Socket insocked;
-    // main.Client Connection via Socket Class
+    // Client Connection via Socket Class
 
     SocketThread(Socket insocket) {
       this.insocked = insocket;
@@ -115,25 +113,25 @@ public class WebServer {
       switch (tokens[0]) {
         case "get_tree" : {
           int id = Integer.parseInt(tokens[1]);
-          Node Node = findActivityById(id);
-          assert (Node!=null);
-          body = Node.toJson(1).toString();
+          Node node = findNodeById(id);
+          assert (node!=null);
+          body = node.toJson(1).toString();
           break;
         }
         case "start": {
           int id = Integer.parseInt(tokens[1]);
-          Node Node = findActivityById(id);
-          assert (Node!=null);
-          Task task = (Task) Node;
+          Node node = findNodeById(id);
+          assert (node!=null);
+          Task task = (Task) node;
           task.startTask();
           body = "{}";
           break;
         }
         case "stop": {
           int id = Integer.parseInt(tokens[1]);
-          Node Node = findActivityById(id);
-          assert (Node!=null);
-          Task task = (Task) Node;
+          Node node = findNodeById(id);
+          assert (node!=null);
+          Task task = (Task) node;
           task.stopTask();
           body = "{}";
           break;

@@ -130,7 +130,7 @@ public class TimeInterval implements Observer {
 
     JSONObject json = new JSONObject();
     json.put("class", "interval");
-    json.put("id", task.getId());
+    json.put("id", id);
     json.put("initialDate", startTime==null
         ? JSONObject.NULL : formatter.format(startTime));
     json.put("finalDate", endTime==null

@@ -2,12 +2,12 @@ package core;
 
 public class SearchById implements Visitor{
 
-  private final Project root;
+  private final Node root;
   private Node found;
   private int id;
 
   public SearchById (Node root) {
-    this.root = (Project) root;
+    this.root = root;
     found = null;
     id=0;
   }
@@ -21,7 +21,7 @@ public class SearchById implements Visitor{
   @Override
   public void visitProject(Project p) {
     if (p.getId() == id){
-      found = p;
+      found = (Node) p;
     }
 
     for (Node child : p.getChildren()) {
@@ -32,7 +32,7 @@ public class SearchById implements Visitor{
   @Override
   public void visitTask(Task t) {
     if(t.getId() == id)
-      found = t;
+      found = (Node) t;
   }
 
   @Override
