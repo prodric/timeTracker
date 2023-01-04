@@ -117,7 +117,7 @@ public class WebServer {
           int id = Integer.parseInt(tokens[1]);
           Node Node = findActivityById(id);
           assert (Node!=null);
-          body = Node.toJson().toString();
+          body = Node.toJson(1).toString();
           break;
         }
         case "start": {

@@ -2,7 +2,7 @@ package core;
 
 public class Id {
   private static Id uniqueInstance = null;
-  private int id = -1;
+  private int id = 0;
 
   public static Id getInstance() {
     if (uniqueInstance == null) {

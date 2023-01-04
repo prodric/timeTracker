@@ -20,6 +20,7 @@ public class TimeInterval implements Observer {
   private Duration totalWorkingTime;
   private static final Logger logger = LoggerFactory.getLogger("Fita1");
   private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+  private int id = 0;
 
   /**
    * Constructor que crea un intervalo, setteando totalWorkingTime,
@@ -27,6 +28,7 @@ public class TimeInterval implements Observer {
    * param task : main.Task    tarea a la que pertenece el intervalo
    */
   public TimeInterval(Task task) {
+    id = Id.getInstance().generateId();
     totalWorkingTime = Duration.ZERO;
     startTime = LocalDateTime.now().plusSeconds(Clock.getInstance().getPeriod());
     endTime = LocalDateTime.now();

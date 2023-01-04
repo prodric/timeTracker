@@ -20,8 +20,9 @@ public class SearchById implements Visitor{
 
   @Override
   public void visitProject(Project p) {
-    if (p.getId() == id)
+    if (p.getId() == id){
       found = p;
+    }
 
     for (Node child : p.getChildren()) {
       child.acceptVisitor(this);
