@@ -23,6 +23,7 @@ public abstract class Node {
   private LocalDateTime endTime;
   private Duration totalWorkingTime;
   private int id;
+  private SearchById searchById;
 
   /**
    * Constructor por defecto de un nodo.
@@ -123,5 +124,10 @@ public abstract class Node {
     json.put("finalDate", endTime==null
         ? JSONObject.NULL : formatter.format(endTime));
     json.put("duration", totalWorkingTime.toSeconds());
+  }
+
+  public Node findActivityById(int id) {
+    searchById = new SearchById(this);
+    return searchById.search(id);
   }
 }
