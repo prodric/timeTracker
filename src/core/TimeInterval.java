@@ -136,7 +136,7 @@ public class TimeInterval implements Observer {
     json.put("finalDate", endTime==null
         ? JSONObject.NULL : formatter.format(endTime));
     json.put("duration", totalWorkingTime.toSeconds());
-    //json.put("active", active);
+    json.put("active", task.getActive());
 
     logger.trace("Time Interval conversion to JSON format successful");
     return json;
