@@ -137,6 +137,21 @@ public class WebServer {
           break;
         }
         // TODO: add new task, project
+        case "add": {
+          int fatherId = Integer.parseInt(tokens[1]);
+          String typeOfNode = tokens[2];
+          String nameOfNode = tokens[3];
+
+          Node father = findNodeById(fatherId);
+          Node n;
+
+          if(typeOfNode == "Project")
+            n = new Project(nameOfNode, (Project) father);
+          else
+            n = new Task(nameOfNode, (Project) father);
+
+          break;
+        }
         // TODO: edit task, project properties
         default:
           assert false;
