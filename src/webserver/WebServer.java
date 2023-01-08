@@ -150,6 +150,8 @@ public class WebServer {
           else
             n = new Task(nameOfNode, (Project) father);
 
+          String tags;
+
           break;
         }
         // TODO: edit task, project properties
