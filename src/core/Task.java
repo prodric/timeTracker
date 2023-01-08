@@ -248,7 +248,7 @@ public class Task extends Node {
     json.put("class", "task");
     super.toJson(json);
     json.put("active", active);
-    if (depth>0) {
+    if (depth>=0) {
       JSONArray jsonIntervals = new JSONArray();
       for (TimeInterval interval : timeIntervals) {
         jsonIntervals.put(interval.toJson());
@@ -258,5 +258,9 @@ public class Task extends Node {
       json.put("intervals", new JSONArray());
     }
     return json;
+  }
+
+  public boolean getActive() {
+    return active;
   }
 }

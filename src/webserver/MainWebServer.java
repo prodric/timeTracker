@@ -38,10 +38,10 @@ public class MainWebServer {
     Project p2 = new Project("Software Testing", root);
     Project p3 = new Project("Databases", root);
 
-    Task t5 = new Task("main.Task Transportation", root);
+    Task t5 = new Task("Task Transportation", root);
 
     Project p5 = new Project("Problems", p1);
-    Project p6 = new Project("main.Project Time Tracker", p1);
+    Project p6 = new Project("Project Time Tracker", p1);
 
     final Task t1 = new Task("First List", p5);
     final Task t2 = new Task("Second List", p5);
