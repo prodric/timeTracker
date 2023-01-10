@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 // Based on
@@ -145,7 +146,7 @@ public class WebServer {
           Node father = findNodeById(fatherId);
           Node n;
 
-          if(typeOfNode == "Project")
+          if(Objects.equals(typeOfNode, "Project"))
             n = new Project(nameOfNode, (Project) father);
           else
             n = new Task(nameOfNode, (Project) father);
