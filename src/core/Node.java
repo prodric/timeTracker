@@ -118,6 +118,7 @@ public abstract class Node {
   protected void toJson(JSONObject json) {
     json.put("id", id);
     json.put("name", name);
+    json.put("tags", tags);
     json.put("initialDate", startTime==null
         ? JSONObject.NULL : formatter.format(startTime));
     json.put("finalDate", endTime==null

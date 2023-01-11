@@ -1,12 +1,16 @@
 package webserver;
 
-import core.*;
+import core.Node;
+import core.Project;
+import core.Task;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.StringTokenizer;
 
@@ -141,7 +145,7 @@ public class WebServer {
         case "add": {
           int fatherId = Integer.parseInt(tokens[1]);
           String typeOfNode = tokens[2];
-          String nameOfNode = tokens[3];
+          String nameOfNode = tokens[3].replace("%20", " ");
 
           Node father = findNodeById(fatherId);
           Node n;
@@ -150,8 +154,13 @@ public class WebServer {
             n = new Project(nameOfNode, (Project) father);
           else
             n = new Task(nameOfNode, (Project) father);
+          ArrayList<String> tags = new ArrayList<>(tokens.length-4);
+          for(int i=4; i< tokens.length; i++){
+            if(tokens[i] == null) break;
+            tags.add(tokens[i]);
+          }
 
-          String tags;
+          n.setTag(tags);
 
           break;
         }
